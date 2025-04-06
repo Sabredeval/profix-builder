@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lg-zoom.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lg-thumbnail.css">
     <script>
         tailwind.config = {
             theme: {
@@ -26,6 +29,41 @@
             }
         }
     </script>
+    <style>
+        .gallery-container img {
+            cursor: pointer;
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            opacity: 0.8;
+        }
+        .lg-backdrop {
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+        .project-gallery .gallery-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .project-gallery .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(247, 168, 37, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .project-gallery .gallery-item:hover::after {
+            opacity: 1;
+        }
+        .project-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+    </style>
 </head>
 <body class="font-sans text-textColor bg-white">
     <!-- Header -->
@@ -82,49 +120,21 @@
         <section class="py-12 px-5 bg-white border-b border-gray-200">
             <div class="container mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#residential" class="px-6 py-2 bg-secondary text-white rounded-full transition-all duration-300 hover:bg-primary">Residential</a>
-                    <a href="#commercial" class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Commercial</a>
-                    <a href="#renovations" class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Renovations</a>
-                    <a href="#extensions" class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Extensions</a>
+                    <button data-filter="all" class="filter-btn px-6 py-2 bg-secondary text-white rounded-full transition-all duration-300 hover:bg-primary">All Projects</button>
+                    <button data-filter="residential" class="filter-btn px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Residential</button>
+                    <button data-filter="commercial" class="filter-btn px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Commercial</button>
+                    <button data-filter="renovation" class="filter-btn px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Renovations</button>
+                    <button data-filter="extension" class="filter-btn px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white">Extensions</button>
                 </div>
             </div>
         </section>
         
-        <!-- Residential Projects -->
-        <section id="residential" class="py-20 px-5 bg-light">
+        <!-- Projects Grid -->
+        <section class="py-16 px-5 bg-light">
             <div class="container mx-auto max-w-7xl">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4 inline-block relative">
-                        Residential Projects
-                        <span class="absolute left-1/2 -bottom-3 w-20 h-1 bg-primary -translate-x-1/2"></span>
-                    </h2>
-                    <p class="text-gray-600 mt-6 text-lg max-w-3xl mx-auto">
-                        Creating beautiful and functional living spaces for homeowners
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project 1 -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="100">
-                        <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luxury Apartment Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-secondary">Luxury Apartment Renovation</h3>
-                                <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Kensington</span>
-                            </div>
-                            <p class="text-gray-600 mb-5">Complete renovation of a 3-bedroom apartment including custom kitchen, two bathrooms, and hardwood flooring throughout.</p>
-                            <ul class="mb-5 text-gray-600">
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Custom kitchen with quartz countertops</li>
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Premium hardwood flooring</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-primary text-sm"></i> Smart home technology integration</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="150">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                    <!-- Project 2 - Heritage Home Restoration -->
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="150" data-category="renovation">
                         <div class="h-64 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home Restoration" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                         </div>
@@ -134,16 +144,49 @@
                                 <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Hampstead</span>
                             </div>
                             <p class="text-gray-600 mb-5">Sensitive restoration of a Grade II listed Georgian townhouse, preserving period features while incorporating modern amenities.</p>
-                            <ul class="mb-5 text-gray-600">
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Original sash windows restoration</li>
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Period-appropriate heating system</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-primary text-sm"></i> Historically accurate decorations</li>
-                            </ul>
+                            
+                            <!-- Project Details -->
+                            <div class="mb-5">
+                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
+                                <ul class="space-y-1 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Restoration of original Georgian features</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Modern kitchen and bathrooms with period styling</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Energy-efficient upgrades with heritage approval</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Gallery Preview -->
+                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-2">
+                                <a href="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home" class="w-full h-32 object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1592152045578-7aa07f0d3177?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1592152045578-7aa07f0d3177?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Period Staircase" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1599327286062-40b0a7f2b305?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1599327286062-40b0a7f2b305?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Living Room" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                            </div>
+                            
+                            <!-- View Project Button -->
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="2">
+                                <span>View Full Project</span>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Project 3 -->
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                    <!-- Project 3 - Modern Family Home -->
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200" data-category="extension">
                         <div class="h-64 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Family Home" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                         </div>
@@ -153,12 +196,136 @@
                                 <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Richmond</span>
                             </div>
                             <p class="text-gray-600 mb-5">Complete renovation and extension of a family home, creating open living spaces with abundant natural light.</p>
-                            <ul class="mb-5 text-gray-600">
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Open-plan kitchen and living area</li>
-                                <li class="flex items-center gap-2 mb-1"><i class="fas fa-check text-primary text-sm"></i> Floor-to-ceiling windows</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-primary text-sm"></i> Underfloor heating throughout</li>
-                            </ul>
+                            
+                            <!-- Project Details -->
+                            <div class="mb-5">
+                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
+                                <ul class="space-y-1 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Open-plan kitchen and living extension</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Floor-to-ceiling glass doors to garden</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Integrated smart home technology</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Gallery Preview -->
+                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-3">
+                                <a href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Family Home" class="w-full h-32 object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Kitchen & Dining" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Modern Living Room" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                            </div>
+                            
+                            <!-- View Project Button -->
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="3">
+                                <span>View Full Project</span>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
                         </div>
+                    </div>
+
+                    <!-- Project 4 - Office Building Renovation -->
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="250" data-category="commercial">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-xl font-bold text-secondary">Office Building Renovation</h3>
+                                <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Central London</span>
+                            </div>
+                            <p class="text-gray-600 mb-5">Comprehensive renovation of a three-story office building, including modern workspaces and conference rooms.</p>
+                            
+                            <!-- Project Details -->
+                            <div class="mb-5">
+                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
+                                <ul class="space-y-1 text-gray-600">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Flexible open-plan workspace design</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>State-of-the-art conference facilities</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>Energy-efficient lighting and HVAC systems</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Gallery Preview -->
+                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-4">
+                                <a href="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building" class="w-full h-32 object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Office Space" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                                <a href="https://images.unsplash.com/photo-1497215842964-222b430dc094?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
+                                    <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Office Design" class="w-full h-[60px] object-cover rounded-md">
+                                </a>
+                            </div>
+                            
+                            <!-- View Project Button -->
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="4">
+                                <span>View Full Project</span>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-16">
+                    <div class="text-4xl text-gray-300 mb-4">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-secondary mb-2">No projects here... yet</h3>
+                    <p class="text-gray-600">Try selecting a different category or contact us to discuss your specific project needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Modal Templates (Hidden by default) -->
+        <div class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center project-modal" id="project-modal">
+            <div class="bg-white rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto mx-5 relative">
+                <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-primary transition-colors duration-300 close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="p-8" id="modal-content">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <section class="py-20 px-5 bg-light" data-aos="fade-up">
+            <div class="container mx-auto max-w-5xl">
+                <div class="bg-secondary rounded-lg p-10 md:p-16 shadow-xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Space?</h2>
+                    <p class="text-white/80 mb-8 text-lg max-w-2xl mx-auto">
+                        Contact us today to discuss your construction project and see how Profix Builders can bring your vision to life.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="contact.html" class="inline-block px-8 py-3 bg-primary text-white font-semibold uppercase tracking-wider rounded transition-all duration-300 hover:bg-primary/90 hover:-translate-y-1 hover:shadow-lg">
+                            Get a Free Quote
+                        </a>
                     </div>
                 </div>
             </div>
@@ -250,14 +417,143 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    
     <script>
+        // Project data for modal content
+        const projectData = {
+            1: {
+                title: "Luxury Apartment Renovation",
+                location: "Kensington, London",
+                description: "This high-end apartment renovation showcases our commitment to luxury and attention to detail. The project involved a complete transformation of a 3-bedroom apartment in the heart of Kensington.",
+                scope: "Complete renovation including designer kitchen, two bathrooms, custom built-in furniture, and premium hardwood flooring throughout.",
+                duration: "16 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1560518883-ce09059eeffa", alt: "Living Room"},
+                    {src: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92", alt: "Kitchen Detail"},
+                    {src: "https://images.unsplash.com/photo-1574739782594-db4ead022697", alt: "Kitchen"},
+                    {src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea", alt: "Bathroom"},
+                    {src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", alt: "Bedroom"}
+                ],
+                testimonial: {
+                    text: "The attention to detail shown by Profix Builders was outstanding. They transformed our apartment into a luxurious home that we're proud to show off. The craftsmanship and quality of finishes exceeded our expectations.",
+                    client: "James & Sarah Williams"
+                }
+            },
+            2: {
+                title: "Heritage Home Restoration",
+                location: "Hampstead, London",
+                description: "This sensitive restoration project involved preserving and enhancing the historical features of a Grade II listed Georgian townhouse while incorporating modern amenities.",
+                scope: "Full restoration of period features, modernization of services, kitchen and bathroom upgrades, and energy efficiency improvements.",
+                duration: "24 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", alt: "Heritage Home"},
+                    {src: "https://images.unsplash.com/photo-1592152045578-7aa07f0d3177", alt: "Period Staircase"},
+                    {src: "https://images.unsplash.com/photo-1599327286062-40b0a7f2b305", alt: "Living Room"},
+                    {src: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83", alt: "Kitchen"},
+                    {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Period Features"}
+                ],
+                testimonial: {
+                    text: "Profix Builders showed remarkable sensitivity to the historical importance of our home. They managed to retain its period charm while seamlessly integrating modern comforts. We couldn't be happier with the results.",
+                    client: "Richard & Elizabeth Thompson"
+                }
+            },
+            3: {
+                title: "Modern Family Home Extension",
+                location: "Richmond, London",
+                description: "This project involved extending and renovating a family home to create light-filled open living spaces with a contemporary design aesthetic.",
+                scope: "Rear and side extension, open-plan kitchen and living area, new master bedroom suite, and landscaped garden.",
+                duration: "20 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c", alt: "Family Home"},
+                    {src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c", alt: "Kitchen & Dining"},
+                    {src: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde", alt: "Modern Living Room"},
+                    {src: "https://images.unsplash.com/photo-1604014237800-1c9102c219da", alt: "Bedroom"},
+                    {src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3", alt: "Bathroom"}
+                ],
+                testimonial: {
+                    text: "The extension has transformed how we live as a family. The spaces flow beautifully, and the connection to the garden has changed our lifestyle completely. Profix Builders understood exactly what we wanted and delivered it flawlessly.",
+                    client: "The Johnson Family"
+                }
+            },
+            4: {
+                title: "Office Building Renovation",
+                location: "Central London",
+                description: "This comprehensive commercial renovation transformed an outdated office building into a modern, efficient workspace suitable for contemporary business needs.",
+                scope: "Complete renovation of three floors including open-plan workspaces, meeting rooms, reception area, and staff facilities.",
+                duration: "18 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2", alt: "Office Building"},
+                    {src: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7", alt: "Office Space"},
+                    {src: "https://images.unsplash.com/photo-1497215842964-222b430dc094", alt: "Office Design"},
+                    {src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174", alt: "Meeting Room"},
+                    {src: "https://images.unsplash.com/photo-1568992688097-33a7cba3d7e9", alt: "Reception Area"}
+                ],
+                testimonial: {
+                    text: "The transformation of our office space has had a remarkable impact on our business. The team at Profix Builders understood our requirements perfectly and delivered a workspace that enhances productivity and impresses our clients.",
+                    client: "David Chen, Operations Director"
+                }
+            },
+            5: {
+                title: "Boutique Hotel Conversion",
+                location: "Shoreditch, London",
+                description: "This exciting project involved converting a former office building into a stylish 22-room boutique hotel in the heart of trendy Shoreditch.",
+                scope: "Complete building conversion including 22 en-suite bedrooms, reception area, restaurant, bar, and rooftop terrace.",
+                duration: "32 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3", alt: "Hotel Exterior"},
+                    {src: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", alt: "Hotel Lobby"},
+                    {src: "https://images.unsplash.com/photo-1560624052-449f5ddf0c31", alt: "Hotel Bar"},
+                    {src: "https://images.unsplash.com/photo-1564501049412-61c2a3083791", alt: "Hotel Room"},
+                    {src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d", alt: "Rooftop Terrace"}
+                ],
+                testimonial: {
+                    text: "Profix Builders exceeded our expectations at every stage. Their ability to transform our dated building into a stunning boutique hotel has been instrumental in our business success. The attention to detail and quality of finish is outstanding.",
+                    client: "Emma Roberts, Hotel Owner"
+                }
+            },
+            6: {
+                title: "Luxury Kitchen Renovation",
+                location: "Chelsea, London",
+                description: "This premium kitchen renovation project showcases our expertise in creating beautiful, functional spaces with high-end finishes and appliances.",
+                scope: "Complete kitchen redesign including custom cabinetry, premium appliances, specialist lighting, and luxury finishes.",
+                duration: "8 weeks",
+                images: [
+                    {src: "https://images.unsplash.com/photo-1574739782594-db4ead022697", alt: "Kitchen Overview"},
+                    {src: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b", alt: "Kitchen Detail"},
+                    {src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea", alt: "Kitchen Island"},
+                    {src: "https://images.unsplash.com/photo-1600585152220-90363fe7e115", alt: "Cabinet Details"},
+                    {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Appliances"}
+                ],
+                testimonial: {
+                    text: "Our kitchen is now the envy of all our friends. Profix Builders understood our vision perfectly and executed it with impeccable craftsmanship. The attention to detail is remarkable, and the functionality exceeds our expectations.",
+                    client: "Michael & Olivia Parker"
+                }
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize AOS
             AOS.init({
                 duration: 800,
                 easing: 'ease-in-out',
                 once: true
+            });
+            
+            // Initialize LightGallery for each gallery
+            document.querySelectorAll('.project-gallery').forEach(gallery => {
+                lightGallery(gallery, {
+                    selector: '.gallery-item',
+                    plugins: [lgZoom, lgThumbnail],
+                    speed: 500,
+                    download: false,
+                    counter: false,
+                    zoomFromOrigin: false
+                });
             });
             
             // Header scroll effect
@@ -268,45 +564,36 @@
 
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 50) {
-                    // Scrolled state: White background, dark text
                     header.classList.add('bg-white', 'shadow-md', 'py-3');
                     header.classList.remove('py-5');
                     
-                    // Change text color to dark
                     headerLinks.forEach(link => {
                         link.classList.add('text-secondary');
                         link.classList.remove('text-white');
                     });
                     
-                    // Change logo text color
                     headerLogo.classList.add('text-secondary');
                     headerLogo.classList.remove('text-white');
                     
-                    // Change hamburger icon color
                     mobileMenuBtn.classList.add('text-secondary');
                     mobileMenuBtn.classList.remove('text-white');
                 } else {
-                    // Initial state: Transparent background, white text
                     header.classList.remove('bg-white', 'shadow-md', 'py-3');
                     header.classList.add('py-5');
                     
-                    // Change text color to white
                     headerLinks.forEach(link => {
                         link.classList.remove('text-secondary');
                         link.classList.add('text-white');
                     });
                     
-                    // Change logo text color
                     headerLogo.classList.remove('text-secondary');
                     headerLogo.classList.add('text-white');
                     
-                    // Change hamburger icon color
                     mobileMenuBtn.classList.remove('text-secondary');
                     mobileMenuBtn.classList.add('text-white');
                 }
             });
 
-            // Execute once on page load to set the initial state
             window.dispatchEvent(new Event('scroll'));
             
             // Mobile menu toggle
@@ -316,32 +603,153 @@
                 mobileMenu.classList.toggle('hidden');
             });
             
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
+            // Project filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+            const noResults = document.getElementById('no-results');
+            
+            // Set up filter button click handlers
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state for filter buttons
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-secondary', 'text-white');
+                        b.classList.add('bg-light', 'text-secondary');
+                    });
                     
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
+                    this.classList.remove('bg-light', 'text-secondary');
+                    this.classList.add('bg-secondary', 'text-white');
                     
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
+                    const filterValue = this.getAttribute('data-filter');
+                    let visibleCount = 0;
+                    
+                    // Filter the project cards
+                    projectCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.classList.remove('hidden');
+                            visibleCount++;
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                    
+                    // Show/hide "No results" message
+                    if (visibleCount === 0) {
+                        noResults.classList.remove('hidden');
+                    } else {
+                        noResults.classList.add('hidden');
+                    }
+                    
+                    // Re-initialize AOS after filtering
+                    AOS.refresh();
+                });
+            });
+            
+            // Project modal functionality
+            const projectModal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            const viewButtons = document.querySelectorAll('.view-project-btn');
+            const closeModalButtons = document.querySelectorAll('.close-modal');
+            
+            // Open modal when clicking View Project button
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-project');
+                    const project = projectData[projectId];
+                    
+                    if (project) {
+                        // Build the modal content HTML
+                        let html = `
+                            <div class="mb-8">
+                                <h2 class="text-3xl font-bold text-secondary mb-2">${project.title}</h2>
+                                <p class="text-primary font-medium">${project.location}</p>
+                            </div>
+                            
+                            <!-- Project Gallery -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div class="space-y-4">
+                                    <img src="${project.images[0].src}?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+                                        alt="${project.images[0].alt}" class="w-full h-auto rounded-lg shadow-md">
+                                    <div class="grid grid-cols-4 gap-2">
+                        `;
                         
-                        // Update active state
-                        document.querySelectorAll('.filter-btn').forEach(btn => {
-                            btn.classList.remove('bg-secondary', 'text-white');
-                            btn.classList.add('bg-light', 'text-secondary');
-                        });
+                        // Add thumbnail images (starting from the second image)
+                        for (let i = 1; i < Math.min(project.images.length, 5); i++) {
+                            html += `
+                                <img src="${project.images[i].src}?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" 
+                                    alt="${project.images[i].alt}" class="w-full h-20 object-cover rounded-md shadow-sm">
+                            `;
+                        }
                         
-                        this.classList.remove('bg-light', 'text-secondary');
-                        this.classList.add('bg-secondary', 'text-white');
+                        html += `
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-xl font-bold text-secondary mb-4">Project Overview</h3>
+                                    <p class="text-gray-600 mb-6">${project.description}</p>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <h4 class="font-semibold text-secondary">Project Scope:</h4>
+                                            <p class="text-gray-600">${project.scope}</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-secondary">Duration:</h4>
+                                            <p class="text-gray-600">${project.duration}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Testimonial -->
+                            <div class="bg-light p-8 rounded-lg">
+                                <div class="text-3xl text-primary opacity-30 mb-4">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <p class="text-lg italic mb-6">${project.testimonial.text}</p>
+                                <p class="font-bold text-secondary">${project.testimonial.client}</p>
+                            </div>
+                            
+                            <div class="mt-10 text-center">
+                                <a href="contact.html" class="inline-block px-8 py-3 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
+                                    Discuss Your Project
+                                </a>
+                            </div>
+                        `;
+                        
+                        // Set the modal content and show the modal
+                        modalContent.innerHTML = html;
+                        projectModal.classList.remove('hidden');
+                        projectModal.classList.add('flex');
+                        document.body.classList.add('overflow-hidden');
                     }
                 });
             });
+            
+            // Close modal when clicking close button or outside the modal
+            closeModalButtons.forEach(btn => {
+                btn.addEventListener('click', closeModal);
+            });
+            
+            projectModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !projectModal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+            
+            function closeModal() {
+                projectModal.classList.add('hidden');
+                projectModal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }
         });
     </script>
 </body>
-</html>
