@@ -3,47 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects - Construction Company</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <title>Our Projects - Profix Builders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f7a825',
+                        secondary: '#2c3e50',
+                        accent: '#e74c3c',
+                        light: '#f4f4f4',
+                        dark: '#333',
+                        textColor: '#4a4a4a'
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .project-gallery .lg-item {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .project-gallery .lg-item:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Our Projects</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+<body class="font-sans text-textColor bg-white">
+    <!-- Header -->
+    <header class="fixed w-full top-0 left-0 py-5 z-50 transition-all duration-300" id="header">
+        <div class="container mx-auto px-5 flex justify-between items-center">
+            <div class="logo flex items-center">
+                <img src="../images/logo.png" alt="Profix Builders" class="h-16 transition-all duration-300">
+                <span class="ml-3 text-xl font-bold text-white hidden md:block transition-colors duration-300">Profix Builders</span>
+            </div>
+            <nav class="relative flex items-center">
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="../index.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300">Home</a></li>
+                    <li><a href="about.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300">About</a></li>
+                    <li><a href="services.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300">Services</a></li>
+                    <li><a href="projects.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full active after:w-full transition-colors duration-300">Projects</a></li>
+                    <li><a href="contact.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300">Contact</a></li>
+                </ul>
+                
+                <!-- Quote Button (Desktop) -->
+                <a href="contact.html" class="hidden md:inline-block ml-6 px-5 py-2 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
+                    Get a Quote
+                </a>
+                
+                <div class="md:hidden text-2xl cursor-pointer mobile-menu-btn text-white transition-colors duration-300">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <!-- Mobile Menu -->
+                <ul id="mobile-menu" class="mobile-menu hidden absolute top-12 right-0 bg-white shadow-lg rounded-lg w-64 py-5 flex flex-col z-50">
+                    <li><a href="../index.html" class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="about.html" class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">About</a></li>
+                    <li><a href="services.html" class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">Services</a></li>
+                    <li><a href="projects.html" class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">Projects</a></li>
+                    <li><a href="contact.html" class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">Contact</a></li>
+                    <li><a href="contact.html" class="block py-3 px-5 mt-3 bg-primary text-white text-center rounded mx-5 hover:bg-primary/90 transition-colors">Get a Quote</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+
+    <!-- Page Banner -->
+    <section class="relative pt-32 pb-24 bg-cover bg-center text-white" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+        <div class="absolute inset-0 bg-secondary/80 z-0"></div>
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Projects</h1>
+                <p class="text-xl max-w-3xl mx-auto">Take a look at our portfolio of successful projects</p>
+            </div>
+        </div>
+    </section>
+
     <main>
-        <section class="projects">
-            <h2>Completed Projects</h2>
-            <article class="project">
-                <img src="../images/project1.jpg" alt="Project 1">
-                <h3>Project Title 1</h3>
-                <p>Description of Project 1, detailing the work done and any notable features.</p>
-            </article>
-            <article class="project">
-                <img src="../images/project2.jpg" alt="Project 2">
-                <h3>Project Title 2</h3>
-                <p>Description of Project 2, detailing the work done and any notable features.</p>
-            </article>
-            <article class="project">
-                <img src="../images/project3.jpg" alt="Project 3">
-                <h3>Project Title 3</h3>
-                <p>Description of Project 3, detailing the work done and any notable features.</p>
-            </article>
-            <!-- Add more projects as needed -->
+        <!-- Project Filters -->
+        <section class="py-12 px-5 bg-white border-b border-gray-200">
+            <div class="container mx-auto">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="px-6 py-2 bg-secondary text-white rounded-full transition-all duration-300 hover:bg-primary filter-btn active" data-filter="all">All Projects</button>
+                    <button class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white filter-btn" data-filter="residential">Residential</button>
+                    <button class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white filter-btn" data-filter="commercial">Commercial</button>
+                    <button class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white filter-btn" data-filter="renovation">Renovation</button>
+                    <button class="px-6 py-2 bg-light text-secondary rounded-full transition-all duration-300 hover:bg-primary hover:text-white filter-btn" data-filter="extension">Extensions</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Featured Projects -->
+        <section class="py-20 px-5 bg-light">
+            <div class="container mx-auto max-w-7xl">
+                <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1: Residential -->
+                    <div class="project-item residential" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Luxury Apartment Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Luxury Apartment Renovation</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Residential</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Complete renovation of a 3-bedroom apartment in Kensington, including custom kitchen, two bathrooms, and hardwood flooring throughout.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project1" 
+                                       data-project-title="Luxury Apartment Renovation" 
+                                       data-project-type="Residential" 
+                                       data-project-location="Kensington, London" 
+                                       data-project-year="2022" 
+                                       data-project-description="This luxury apartment renovation in Kensington transformed a dated 3-bedroom flat into a modern, high-end living space. The project included a complete redesign of the kitchen with custom cabinetry and premium appliances, renovation of two bathrooms with marble tiling and walk-in showers, installation of premium hardwood flooring throughout, and a comprehensive lighting design to enhance the space.<br><br>Key features included:<br>• Custom kitchen with quartz countertops<br>• Two renovated bathrooms with high-end fixtures<br>• Premium hardwood flooring throughout<br>• Bespoke built-in storage solutions<br>• Smart home technology integration<br>• Energy-efficient windows and insulation"
+                                       data-project-gallery='["https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1574739782594-db4ead022697?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Commercial -->
+                    <div class="project-item commercial" data-aos="fade-up" data-aos-delay="150">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Office Building Renovation</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Commercial</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Comprehensive renovation of a three-story office building in Central London, including modern office spaces, conference rooms, and communal areas.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project2" 
+                                       data-project-title="Office Building Renovation" 
+                                       data-project-type="Commercial" 
+                                       data-project-location="Central London" 
+                                       data-project-year="2023" 
+                                       data-project-description="This comprehensive renovation transformed a dated three-story office building in Central London into a modern, efficient workspace. The project involved stripping the building back to its core structure and completely redesigning the interior layout to maximize space efficiency and create a more collaborative working environment.<br><br>The renovation included:<br>• Open-plan office spaces with flexible workstations<br>• Four state-of-the-art conference rooms with integrated AV systems<br>• A welcoming reception area with custom millwork<br>• Redesigned communal areas including kitchen and breakout spaces<br>• Upgraded HVAC systems for improved energy efficiency<br>• New electrical and IT infrastructure throughout<br>• Modern lighting design to enhance productivity and comfort"
+                                       data-project-gallery='["https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1517502884422-41eaead166d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Extension -->
+                    <div class="project-item extension" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1621343486226-5a292f16ef45?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Home Extension" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Modern Home Extension</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Extension</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Stylish side and rear extension for a Victorian terraced house in Fulham, creating an open-plan kitchen and living space with floor-to-ceiling glass.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project3" 
+                                       data-project-title="Modern Home Extension" 
+                                       data-project-type="Extension" 
+                                       data-project-location="Fulham, London" 
+                                       data-project-year="2023" 
+                                       data-project-description="This contemporary extension project transformed a traditional Victorian terraced house in Fulham into a modern family home with abundant natural light and a seamless connection to the garden.<br><br>The project included:<br>• A 4-meter side return extension<br>• 6-meter rear extension with floor-to-ceiling glass doors<br>• Open-plan kitchen and living space with bespoke cabinetry<br>• Polished concrete flooring with underfloor heating<br>• Roof lanterns to maximize natural light<br>• Custom-built garden patio with outdoor lighting<br>• Integration of indoor and outdoor spaces for modern family living<br><br>The design carefully balanced the traditional Victorian architecture at the front of the property with contemporary design elements in the extension, creating a harmonious transition between old and new."
+                                       data-project-gallery='["https://images.unsplash.com/photo-1621343486226-5a292f16ef45?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Renovation -->
+                    <div class="project-item renovation" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home Restoration" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Heritage Home Restoration</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Renovation</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Sensitive restoration of a Grade II listed Georgian townhouse in Hampstead, preserving period features while incorporating modern amenities.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project4" 
+                                       data-project-title="Heritage Home Restoration" 
+                                       data-project-type="Renovation" 
+                                       data-project-location="Hampstead, London" 
+                                       data-project-year="2021" 
+                                       data-project-description="This challenging project involved the careful restoration of a Grade II listed Georgian townhouse in Hampstead. Our team worked closely with conservation specialists and the local planning authority to ensure that all work respected the historical significance of the property while subtly introducing modern conveniences.<br><br>The restoration included:<br>• Careful repair of original sash windows and shutters<br>• Restoration of ornate plasterwork and cornicing<br>• Refurbishment of original wooden flooring<br>• Sympathetic modernization of kitchen and bathrooms<br>• Installation of new heating system with period-appropriate radiators<br>• Discreet integration of modern lighting and technology<br>• Complete redecoration using historically accurate colors and techniques<br><br>The result was a beautiful balance of period charm and contemporary comfort, preserving the character of this significant heritage property for future generations."
+                                       data-project-gallery='["https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1589834390005-5d4fb9bf3d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1601084881623-cdf9a8ea242c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5: Commercial -->
+                    <div class="project-item commercial" data-aos="fade-up" data-aos-delay="150">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boutique Hotel Conversion" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Boutique Hotel Conversion</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Commercial</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Conversion of a former office building into a 22-room boutique hotel in Shoreditch, including reception area, bar, restaurant and outdoor terrace.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project5" 
+                                       data-project-title="Boutique Hotel Conversion" 
+                                       data-project-type="Commercial" 
+                                       data-project-location="Shoreditch, London" 
+                                       data-project-year="2022" 
+                                       data-project-description="This ambitious project transformed a former office building in the heart of Shoreditch into a stylish 22-room boutique hotel. The conversion required significant structural alterations and a complete reimagining of the interior spaces to create a distinctive hospitality venue with character and charm.<br><br>The project included:<br>• Complete reconfiguration of interior spaces to create 22 unique hotel rooms<br>• Installation of en-suite bathrooms throughout<br>• Creation of a welcoming reception area with custom-designed front desk<br>• Development of a vibrant bar and restaurant space on the ground floor<br>• Construction of a partially covered rooftop terrace with panoramic views<br>• Installation of a commercial kitchen for the restaurant<br>• Comprehensive mechanical and electrical systems upgrade<br>• Custom joinery and unique design elements throughout<br><br>Working closely with interior designers and the hotel operators, we delivered a hotel that has quickly become one of Shoreditch's most sought-after accommodation options."
+                                       data-project-gallery='["https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1571003123771-bd5451398d5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 6: Extension -->
+                    <div class="project-item extension" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1625708458528-802ec79b1ed8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Contemporary Garden Room" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-xl font-bold text-secondary">Contemporary Garden Room</h3>
+                                    <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Extension</span>
+                                </div>
+                                <p class="text-gray-600 mb-5">Design and construction of a multi-purpose garden room in Richmond, featuring a home office, gym area, and entertainment space with full-width sliding doors.</p>
+                                <button class="view-project-btn inline-flex items-center text-primary font-semibold hover:underline group" 
+                                       data-project-id="project6" 
+                                       data-project-title="Contemporary Garden Room" 
+                                       data-project-type="Extension" 
+                                       data-project-location="Richmond, London" 
+                                       data-project-year="2023" 
+                                       data-project-description="This bespoke garden room project in Richmond created a versatile, year-round space that expanded the functionality of the family home. Designed as a multi-purpose retreat, the garden room provides dedicated areas for work, exercise, and relaxation.<br><br>The project included:<br>• A 30 square meter timber-framed structure with high-performance insulation<br>• Full-width sliding glass doors connecting to the garden<br>• Dedicated home office area with built-in storage and cabling<br>• Gym section with impact-resistant flooring<br>• Entertainment area with media wall and integrated sound system<br>• Mini kitchenette with refrigerator and coffee facilities<br>• Separate bathroom with shower<br>• Sustainable green roof system<br>• Air conditioning for year-round comfort<br><br>The garden room was constructed with minimal disruption to the main house and has significantly enhanced both the property value and the clients' lifestyle by providing flexible additional space separated from the main residence."
+                                       data-project-gallery='["https://images.unsplash.com/photo-1625708458528-802ec79b1ed8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1599327286062-40b0a7f2b305?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"]'>
+                                    View Project <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Detail Modal -->
+        <div id="project-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center">
+            <div class="container mx-auto px-5 max-w-6xl max-h-[90vh] overflow-y-auto bg-white rounded-lg">
+                <div class="relative">
+                    <button id="close-modal" class="absolute top-5 right-5 text-2xl text-gray-500 hover:text-gray-700 z-10">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="p-8">
+                        <h2 id="modal-project-title" class="text-3xl font-bold text-secondary mb-1"></h2>
+                        <div class="flex flex-wrap gap-4 mb-8">
+                            <span id="modal-project-type" class="text-sm font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full"></span>
+                            <span id="modal-project-location" class="text-sm text-gray-600"><i class="fas fa-map-marker-alt mr-2"></i></span>
+                            <span id="modal-project-year" class="text-sm text-gray-600"><i class="fas fa-calendar-alt mr-2"></i></span>
+                        </div>
+                        
+                        <!-- Project Gallery -->
+                        <div id="project-gallery" class="project-gallery grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <!-- Gallery images will be populated by JavaScript -->
+                        </div>
+                        
+                        <div id="modal-project-description" class="text-gray-600 mb-8"></div>
+                        
+                        <div class="flex justify-between items-center border-t border-gray-200 pt-6">
+                            <a href="contact.html" class="inline-block px-6 py-3 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
+                                Discuss Your Project
+                            </a>
+                            <button id="close-modal-btn" class="px-6 py-3 bg-light text-secondary font-semibold rounded transition-all duration-300 hover:bg-gray-200">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <section class="py-20 px-5 bg-white" data-aos="fade-up">
+            <div class="container mx-auto max-w-5xl">
+                <div class="bg-secondary rounded-lg p-10 md:p-16 shadow-xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Project?</h2>
+                    <p class="text-white/80 mb-8 text-lg max-w-2xl mx-auto">
+                        Contact us today to discuss how we can bring your construction vision to life with the same quality and attention to detail you see in our portfolio.
+                    </p>
+                    <a href="contact.html" class="inline-block px-8 py-3 bg-primary text-white font-semibold uppercase tracking-wider rounded transition-all duration-300 hover:bg-primary/90 hover:-translate-y-1 hover:shadow-lg">
+                        Get a Free Quote
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Construction Company. All rights reserved.</p>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white pt-20">
+        <div class="container mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div>
+                    <div class="mb-5">
+                        <img src="../images/logo.png" alt="Construction Company Logo" class="h-24">
+                    </div>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Your trusted partner in building and construction. Committed to quality, innovation, and excellence.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-primary hover:-translate-y-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-primary hover:-translate-y-1">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-primary hover:-translate-y-1">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:bg-primary hover:-translate-y-1">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6 pb-3 relative after:absolute after:w-12 after:h-1 after:bg-primary after:left-0 after:bottom-0">
+                        Quick Links
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="../index.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">About Us</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Services</a></li>
+                        <li><a href="projects.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Projects</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6 pb-3 relative after:absolute after:w-12 after:h-1 after:bg-primary after:left-0 after:bottom-0">
+                        Our Services
+                    </h3>
+                    <ul class="space-y-3">
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Loft Conversion</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">House Extension</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Full Refurbishment</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Driveway</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Garden</a></li>
+                        <li><a href="services.html" class="text-gray-400 hover:text-primary hover:pl-1 transition-all duration-300">Electrical-Plumbing</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6 pb-3 relative after:absolute after:w-12 after:h-1 after:bg-primary after:left-0 after:bottom-0">
+                        Contact Info
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex text-gray-400">
+                            <i class="fas fa-map-marker-alt text-primary mr-3 mt-1 w-5"></i> 
+                            <span>London, United Kingdom</span>
+                        </li>
+                        <li class="flex text-gray-400">
+                            <i class="fas fa-phone text-primary mr-3 mt-1 w-5"></i> 
+                            <span>+447495093063</span>
+                        </li>
+                        <li class="flex text-gray-400">
+                            <i class="fas fa-envelope text-primary mr-3 mt-1 w-5"></i> 
+                            <span>profixbuilders@profixbuildersltd.com</span>
+                        </li>
+                        <li class="flex text-gray-400">
+                            <i class="fas fa-clock text-primary mr-3 mt-1 w-5"></i> 
+                            <span>Mon-Sat: 8:00 AM - 8:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center py-6 mt-16 border-t border-white/10">
+                <p class="text-gray-400">&copy; 2025 Profix Builders. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
-    <script src="../js/main.js"></script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('header');
+            const headerLinks = header.querySelectorAll('ul > li > a');
+            const headerLogo = header.querySelector('.logo span');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    // Scrolled state: White background, dark text
+                    header.classList.add('bg-white', 'shadow-md', 'py-3');
+                    header.classList.remove('py-5');
+                    
+                    // Change text color to dark
+                    headerLinks.forEach(link => {
+                        link.classList.add('text-secondary');
+                        link.classList.remove('text-white');
+                    });
+                    
+                    // Change logo text color
+                    headerLogo.classList.add('text-secondary');
+                    headerLogo.classList.remove('text-white');
+                    
+                    // Change hamburger icon color
+                    mobileMenuBtn.classList.add('text-secondary');
+                    mobileMenuBtn.classList.remove('text-white');
+                } else {
+                    // Initial state: Transparent background, white text
+                    header.classList.remove('bg-white', 'shadow-md', 'py-3');
+                    header.classList.add('py-5');
+                    
+                    // Change text color to white
+                    headerLinks.forEach(link => {
+                        link.classList.remove('text-secondary');
+                        link.classList.add('text-white');
+                    });
+                    
+                    // Change logo text color
+                    headerLogo.classList.remove('text-secondary');
+                    headerLogo.classList.add('text-white');
+                    
+                    // Change hamburger icon color
+                    mobileMenuBtn.classList.remove('text-secondary');
+                    mobileMenuBtn.classList.add('text-white');
+                }
+            });
+
+            // Execute once on page load to set the initial state
+            window.dispatchEvent(new Event('scroll'));
+            
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Project filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectItems = document.querySelectorAll('.project-item');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-secondary', 'text-white');
+                        b.classList.add('bg-light', 'text-secondary');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('bg-light', 'text-secondary');
+                    this.classList.add('bg-secondary', 'text-white');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter projects
+                    projectItems.forEach(item => {
+                        if (filter === 'all' || item.classList.contains(filter)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Project Modal
+            const modal = document.getElementById('project-modal');
+            const modalTitle = document.getElementById('modal-project-title');
+            const modalType = document.getElementById('modal-project-type');
+            const modalLocation = document.getElementById('modal-project-location');
+            const modalYear = document.getElementById('modal-project-year');
+            const modalDescription = document.getElementById('modal-project-description');
+            const modalGallery = document.getElementById('project-gallery');
+            const closeModal = document.getElementById('close-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const viewProjectBtns = document.querySelectorAll('.view-project-btn');
+            
+            // Initialize lightGallery for project gallery
+            let galleryInstance = null;
+            
+            viewProjectBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-project-id');
+                    const projectTitle = this.getAttribute('data-project-title');
+                    const projectType = this.getAttribute('data-project-type');
+                    const projectLocation = this.getAttribute('data-project-location');
+                    const projectYear = this.getAttribute('data-project-year');
+                    const projectDescription = this.getAttribute('data-project-description');
+                    const projectGallery = JSON.parse(this.getAttribute('data-project-gallery'));
+                    
+                    // Populate modal content
+                    modalTitle.textContent = projectTitle;
+                    modalType.textContent = projectType;
+                    modalLocation.innerHTML = `<i class="fas fa-map-marker-alt mr-2"></i>${projectLocation}`;
+                    modalYear.innerHTML = `<i class="fas fa-calendar-alt mr-2"></i>${projectYear}`;
+                    modalDescription.innerHTML = projectDescription;
+                    
+                    // Populate gallery
+                    modalGallery.innerHTML = '';
+                    projectGallery.forEach((img, index) => {
+                        const galleryItem = document.createElement('div');
+                        galleryItem.className = 'lg-item rounded overflow-hidden shadow-sm cursor-pointer';
+                        galleryItem.setAttribute('data-src', img);
+                        
+                        galleryItem.innerHTML = `
+                            <img src="${img}" alt="Project image ${index + 1}" class="w-full h-40 object-cover">
+                        `;
+                        
+                        modalGallery.appendChild(galleryItem);
+                    });
+                    
+                    // Show modal
+                    modal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Initialize lightGallery
+                    if (galleryInstance) {
+                        galleryInstance.destroy();
+                    }
+                    
+                    galleryInstance = lightGallery(modalGallery, {
+                        selector: '.lg-item',
+                        speed: 500,
+                        download: false,
+                        counter: true,
+                        plugins: [lgZoom, lgThumbnail],
+                        zoomFromOrigin: false
+                    });
+                });
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                if (galleryInstance) {
+                    galleryInstance.destroy();
+                    galleryInstance = null;
+                }
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                if (galleryInstance) {
+                    galleryInstance.destroy();
+                    galleryInstance = null;
+                }
+            });
+            
+            // Close modal when clicking outside of content
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    if (galleryInstance) {
+                        galleryInstance.destroy();
+                        galleryInstance = null;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
