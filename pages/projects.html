@@ -134,11 +134,11 @@
             <div class="container mx-auto max-w-7xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
                     <!-- Project 2 - Heritage Home Restoration -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="150" data-category="renovation">
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="150" data-category="renovation">
                         <div class="h-64 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home Restoration" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                         </div>
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-grow">
                             <div class="flex justify-between items-start mb-3">
                                 <h3 class="text-xl font-bold text-secondary">Heritage Home Restoration</h3>
                                 <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Hampstead</span>
@@ -178,7 +178,7 @@
                             </div>
                             
                             <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="2">
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="2">
                                 <span>View Full Project</span>
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -186,11 +186,11 @@
                     </div>
 
                     <!-- Project 3 - Modern Family Home -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="200" data-category="extension">
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="200" data-category="extension">
                         <div class="h-64 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Family Home" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                         </div>
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-grow">
                             <div class="flex justify-between items-start mb-3">
                                 <h3 class="text-xl font-bold text-secondary">Modern Family Home</h3>
                                 <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Richmond</span>
@@ -230,7 +230,7 @@
                             </div>
                             
                             <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="3">
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="3">
                                 <span>View Full Project</span>
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -238,11 +238,11 @@
                     </div>
 
                     <!-- Project 4 - Office Building Renovation -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-aos="fade-up" data-aos-delay="250" data-category="commercial">
+                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="250" data-category="commercial">
                         <div class="h-64 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
                         </div>
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-grow">
                             <div class="flex justify-between items-start mb-3">
                                 <h3 class="text-xl font-bold text-secondary">Office Building Renovation</h3>
                                 <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Central London</span>
@@ -282,7 +282,7 @@
                             </div>
                             
                             <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center" data-project="4">
+                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="4">
                                 <span>View Full Project</span>
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -439,10 +439,6 @@
                     {src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea", alt: "Bathroom"},
                     {src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", alt: "Bedroom"}
                 ],
-                testimonial: {
-                    text: "The attention to detail shown by Profix Builders was outstanding. They transformed our apartment into a luxurious home that we're proud to show off. The craftsmanship and quality of finishes exceeded our expectations.",
-                    client: "James & Sarah Williams"
-                }
             },
             2: {
                 title: "Heritage Home Restoration",
@@ -457,10 +453,6 @@
                     {src: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83", alt: "Kitchen"},
                     {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Period Features"}
                 ],
-                testimonial: {
-                    text: "Profix Builders showed remarkable sensitivity to the historical importance of our home. They managed to retain its period charm while seamlessly integrating modern comforts. We couldn't be happier with the results.",
-                    client: "Richard & Elizabeth Thompson"
-                }
             },
             3: {
                 title: "Modern Family Home Extension",
@@ -475,10 +467,6 @@
                     {src: "https://images.unsplash.com/photo-1604014237800-1c9102c219da", alt: "Bedroom"},
                     {src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3", alt: "Bathroom"}
                 ],
-                testimonial: {
-                    text: "The extension has transformed how we live as a family. The spaces flow beautifully, and the connection to the garden has changed our lifestyle completely. Profix Builders understood exactly what we wanted and delivered it flawlessly.",
-                    client: "The Johnson Family"
-                }
             },
             4: {
                 title: "Office Building Renovation",
@@ -493,10 +481,6 @@
                     {src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174", alt: "Meeting Room"},
                     {src: "https://images.unsplash.com/photo-1568992688097-33a7cba3d7e9", alt: "Reception Area"}
                 ],
-                testimonial: {
-                    text: "The transformation of our office space has had a remarkable impact on our business. The team at Profix Builders understood our requirements perfectly and delivered a workspace that enhances productivity and impresses our clients.",
-                    client: "David Chen, Operations Director"
-                }
             },
             5: {
                 title: "Boutique Hotel Conversion",
@@ -511,10 +495,6 @@
                     {src: "https://images.unsplash.com/photo-1564501049412-61c2a3083791", alt: "Hotel Room"},
                     {src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d", alt: "Rooftop Terrace"}
                 ],
-                testimonial: {
-                    text: "Profix Builders exceeded our expectations at every stage. Their ability to transform our dated building into a stunning boutique hotel has been instrumental in our business success. The attention to detail and quality of finish is outstanding.",
-                    client: "Emma Roberts, Hotel Owner"
-                }
             },
             6: {
                 title: "Luxury Kitchen Renovation",
@@ -529,10 +509,6 @@
                     {src: "https://images.unsplash.com/photo-1600585152220-90363fe7e115", alt: "Cabinet Details"},
                     {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Appliances"}
                 ],
-                testimonial: {
-                    text: "Our kitchen is now the envy of all our friends. Profix Builders understood our vision perfectly and executed it with impeccable craftsmanship. The attention to detail is remarkable, and the functionality exceeds our expectations.",
-                    client: "Michael & Olivia Parker"
-                }
             }
         };
 
@@ -700,15 +676,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <!-- Testimonial -->
-                            <div class="bg-light p-8 rounded-lg">
-                                <div class="text-3xl text-primary opacity-30 mb-4">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-                                <p class="text-lg italic mb-6">${project.testimonial.text}</p>
-                                <p class="font-bold text-secondary">${project.testimonial.client}</p>
                             </div>
                             
                             <div class="mt-10 text-center">
