@@ -1,0 +1,31 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "_projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Location", name: "location", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["residential", "commercial", "renovation", "extension"]}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Project Scope", name: "scope", widget: "text"}
+      - {label: "Duration", name: "duration", widget: "string"}
+      - label: "Project Highlights"
+        name: "highlights"
+        widget: "list"
+        field: {label: "Highlight", name: "highlight", widget: "string"}
+      - label: "Gallery Images"
+        name: "images" 
+        widget: "list"
+        fields:
+          - {label: "Image", name: "src", widget: "image"}
+          - {label: "Alt Text", name: "alt", widget: "string"}
