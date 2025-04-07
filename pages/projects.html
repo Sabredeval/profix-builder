@@ -522,36 +522,6 @@
                 once: true
             });
 
-            fetch('/_projects/index.json')
-            .then(response => response.json())
-            .then(data => {
-                const projectsGrid = document.getElementById('projects-grid');
-                if (!projectsGrid) return;
-                
-                // Clear loading state or placeholder
-                projectsGrid.innerHTML = '';
-                
-                // Sort projects by order if available
-                data.sort((a, b) => (a.order || 99) - (b.order || 99));
-                
-                // Add each project to the grid
-                data.forEach(project => {
-                    const projectCard = createProjectCard(project);
-                    projectsGrid.appendChild(projectCard);
-                });
-                
-                // Re-initialize after loading projects
-                initProject();
-            })
-            .catch(error => {
-                console.error('Error loading projects:', error);
-                // If API fails, use the static project data as fallback
-                const projectCards = document.querySelectorAll('.project-card');
-                if (projectCards.length === 0) {
-                    loadFallbackProjects();
-                }
-            });
-            
             // Initialize LightGallery for each gallery
             document.querySelectorAll('.project-gallery').forEach(gallery => {
                 lightGallery(gallery, {
