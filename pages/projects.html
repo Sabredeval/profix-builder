@@ -751,59 +751,7 @@
             }
             
         });
-        function createProjectCard(project) {
-            // Create project card from CMS data
-            const card = document.createElement('div');
-            card.className = 'project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-category', project.category);
-            
-            // Create highlights HTML
-            const highlightsHTML = project.highlights ? project.highlights.map(highlight => `
-                <li class="flex items-start">
-                    <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                    <span>${highlight}</span>
-                </li>
-            `).join('') : '';
-            
-            // Template for the card
-            card.innerHTML = `
-                <div class="h-64 overflow-hidden">
-                    <img src="${project.thumbnail}" alt="${project.title}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
-                </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-3">
-                        <h3 class="text-xl font-bold text-secondary">${project.title}</h3>
-                        <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">${project.location}</span>
-                    </div>
-                    <p class="text-gray-600 mb-5">${project.description}</p>
-                    
-                    <div class="mb-5">
-                        <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
-                        <ul class="space-y-1 text-gray-600">
-                            ${highlightsHTML}
-                        </ul>
-                    </div>
-                    
-                    <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-id="${project.id || project.slug}">
-                        <span>View Full Project</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            `;
-            
-            return card;
-        }
     </script>
-    <script>
-        if (window.netlifyIdentity) {
-          window.netlifyIdentity.on("init", user => {
-            if (!user) {
-              window.netlifyIdentity.on("login", () => {
-                document.location.href = "/admin/";
-              });
-            }
-          });
-        }
-      </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/load-projects.js"></script>
 </body>

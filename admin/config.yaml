@@ -1,9 +1,11 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: master
+  repo: Sabredeval/profix-builder
+  auth_endpoint: https://grffvgtgvtcoiaegadap.supabase.co/auth/v1
 
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "images/projects"
+public_folder: "/images/projects"
 
 collections:
   - name: "projects"
@@ -15,17 +17,12 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Location", name: "location", widget: "string"}
       - {label: "Category", name: "category", widget: "select", options: ["residential", "commercial", "renovation", "extension"]}
-      - {label: "Featured Image", name: "thumbnail", widget: "image"}
       - {label: "Description", name: "description", widget: "text"}
-      - {label: "Project Scope", name: "scope", widget: "text"}
-      - {label: "Duration", name: "duration", widget: "string"}
-      - label: "Project Highlights"
-        name: "highlights"
-        widget: "list"
-        field: {label: "Highlight", name: "highlight", widget: "string"}
-      - label: "Gallery Images"
-        name: "images" 
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Project Highlights", name: "highlights", widget: "list"}
+      - label: "Gallery"
+        name: "gallery"
         widget: "list"
         fields:
-          - {label: "Image", name: "src", widget: "image"}
+          - {label: "Image", name: "image", widget: "image"}
           - {label: "Alt Text", name: "alt", widget: "string"}
