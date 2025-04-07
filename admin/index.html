@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profix Builders - Content Manager</title>
     
+    <!-- Load Supabase first -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="supabase-auth.js" type="module"></script>
     
     <style>
       body {
@@ -54,9 +53,14 @@
       .login-button:hover {
         background-color: #e69716;
       }
+
+      #cms-root {
+        height: 100%;
+      }
     </style>
   </head>
   <body>
+    <!-- Login Form -->
     <div id="login" class="login-container">
       <h1>Profix Builders Admin</h1>
       <form id="login-form" class="login-form">
@@ -66,10 +70,17 @@
       </form>
     </div>
     
+    <!-- CMS Root Element -->
+    <div id="cms-root"></div>
+    
+    <!-- Load Decap CMS after Supabase -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
     <script>
+      // Initialize Supabase client first
       const supabaseUrl = 'https://grffvgtgvtcoiaegadap.supabase.co';
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyZmZ2Z3RndnRjb2lhZWdhZGFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjg0NTcsImV4cCI6MjA1OTYwNDQ1N30.DJtyW5sRugSeIy_m0PRRpxU86UAjcMjxBh0gTQbIT4k';
-      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       
       // Handle login form submission
       document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -94,7 +105,7 @@
             config: {
               backend: {
                 name: 'git-gateway',
-                repo: 'your-github-username/construction-company-website',
+                repo: 'Sabredeval/profix-builder',
                 auth_token: data.session.access_token,
               }
             }
@@ -107,22 +118,26 @@
       
       // Check if user is already logged in
       (async () => {
-        const { data } = await supabase.auth.getSession();
-        
-        if (data.session) {
-          // Already logged in
-          document.getElementById('login').style.display = 'none';
+        try {
+          const { data } = await supabase.auth.getSession();
           
-          // Initialize CMS with auth token
-          window.CMS.init({
-            config: {
-              backend: {
-                name: 'git-gateway',
-                repo: 'Sabredeval/profix-builders',
-                auth_token: data.session.access_token,
+          if (data.session) {
+            // Already logged in
+            document.getElementById('login').style.display = 'none';
+            
+            // Initialize CMS with auth token
+            window.CMS.init({
+              config: {
+                backend: {
+                  name: 'git-gateway',
+                  repo: 'Sabredeval/profix-builder',
+                  auth_token: data.session.access_token,
+                }
               }
-            }
-          });
+            });
+          }
+        } catch (error) {
+          console.error("Auth check failed:", error);
         }
       })();
     </script>
