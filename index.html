@@ -504,48 +504,41 @@
                     <div class="lg:col-span-2 bg-white p-8 md:p-10 rounded-lg shadow-md" data-aos="fade-left">
                         <form id="contact-form" method="POST" data-netlify="true" name="home-contact" action="/success.html" class="grid grid-cols-1 md:grid-cols-2 gap-6" netlify>
                             <input type="hidden" name="form-name" value="home-contact">
-                                <div class="mb-2">
-                                <label for="name" class="block font-semibold text-secondary mb-2">Full Name</label>
-                                <input type="text" id="name" name="name" required 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
+                            
+                            <div>
+                                <label for="home-name" class="block font-medium text-secondary mb-2">Your Name *</label>
+                                <input type="text" id="home-name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
                             </div>
                             
-                            <div class="mb-2">
-                                <label for="email" class="block font-semibold text-secondary mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" required 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
+                            <div>
+                                <label for="home-email" class="block font-medium text-secondary mb-2">Email Address *</label>
+                                <input type="email" id="home-email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
                             </div>
                             
-                            <div class="mb-2">
-                                <label for="phone" class="block font-semibold text-secondary mb-2">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
+                            <div>
+                                <label for="home-phone" class="block font-medium text-secondary mb-2">Phone Number</label>
+                                <input type="tel" id="home-phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
                             </div>
                             
-                            <div class="mb-2">
-                                <label for="project-type" class="block font-semibold text-secondary mb-2">Project Type</label>
-                                <select id="project-type" name="project-type" 
-                                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
-                                    <option value="">Select a project type</option>
-                                    <option value="commercial">Commercial Construction</option>
-                                    <option value="residential">Residential Construction</option>
-                                    <option value="renovation">Renovation</option>
+                            <div>
+                                <label for="home-subject" class="block font-medium text-secondary mb-2">Subject</label>
+                                <select id="home-subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">
+                                    <option value="quote">Request a Quote</option>
+                                    <option value="information">General Information</option>
+                                    <option value="support">Project Support</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>
                             
-                            <div class="mb-6 md:col-span-2">
-                                <label for="message" class="block font-semibold text-secondary mb-2">Project Details</label>
-                                <textarea id="message" name="message" rows="5" required 
-                                          class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"></textarea>
+                            <div class="md:col-span-2">
+                                <label for="home-message" class="block font-medium text-secondary mb-2">Your Message *</label>
+                                <textarea id="home-message" name="message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors"></textarea>
                             </div>
                             
                             <div class="md:col-span-2">
-                                <button type="submit" class="w-full px-6 py-4 bg-primary text-white font-semibold uppercase tracking-wider rounded flex items-center justify-center gap-3 transition-all duration-300 hover:bg-primary/90 hover:shadow-lg group">
-                                    <span>Send Request</span>
-                                    <span class="transition-transform duration-300 group-hover:translate-x-1">
-                                        <i class="fas fa-paper-plane"></i>
-                                    </span>
+                                <button type="submit" class="px-8 py-3 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md flex items-center">
+                                    <span>Send Message</span>
+                                    <i class="fas fa-paper-plane ml-2"></i>
                                 </button>
                             </div>
                         </form>
@@ -788,31 +781,14 @@
             }
             
             // Form submission
+            // Form submission
             const contactForm = document.getElementById('contact-form');
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const formData = new FormData(this);
-                    const formObject = {};
-                    
-                    formData.forEach((value, key) => {
-                        formObject[key] = value;
-                    });
-                    
-                    // Replace with actual API endpoint
-                    console.log('Form data:', formObject);
-                    
-                    // Show success message (demo only)
-                    contactForm.innerHTML = `
-                        <div class="text-center py-8 md:col-span-2">
-                            <div class="text-4xl text-green-500 mb-4">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-secondary mb-3">Message Sent Successfully!</h3>
-                            <p class="text-gray-600">Thank you for contacting us. We'll get back to you shortly.</p>
-                        </div>
-                    `;
+                    const submitBtn = contactForm.querySelector('button[type="submit"]');
+                    const originalBtnText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
                 });
             }
         });
