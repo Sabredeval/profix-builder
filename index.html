@@ -502,8 +502,9 @@
                     </div>
                     
                     <div class="lg:col-span-2 bg-white p-8 md:p-10 rounded-lg shadow-md" data-aos="fade-left">
-                        <form id="contact-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="mb-2">
+                        <form id="contact-form" method="POST" data-netlify="true" name="home-contact" action="/success.html" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="hidden" name="form-name" value="home-contact">
+                                <div class="mb-2">
                                 <label for="name" class="block font-semibold text-secondary mb-2">Full Name</label>
                                 <input type="text" id="name" name="name" required 
                                        class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors">

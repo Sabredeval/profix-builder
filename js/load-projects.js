@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
         
-        // Initialize project modal functionality if applicable
         if (typeof initializeProjectModals === 'function') {
           initializeProjectModals();
         }
