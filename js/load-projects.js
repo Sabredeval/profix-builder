@@ -2,18 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get the projects container
     const projectsGrid = document.getElementById('projects-grid');
     
-    // Only run this code on the projects page
     if (!projectsGrid) return;
     
-    // Show loading state
     projectsGrid.innerHTML = '<div class="col-span-3 text-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto"></div><p class="mt-4 text-gray-600">Loading projects...</p></div>';
     
-    // Initialize Supabase client
     const supabaseUrl = 'https://grffvgtgvtcoiaegadap.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyZmZ2Z3RndnRjb2lhZWdhZGFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjg0NTcsImV4cCI6MjA1OTYwNDQ1N30.DJtyW5sRugSeIy_m0PRRpxU86UAjcMjxBh0gTQbIT4k';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
     
-    // Now use Supabase directly
+    console.log(supabase)
+
     supabase
       .from('projects')
       .select('*')
@@ -21,10 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(({ data: projects, error }) => {
         if (error) throw error;
         
-        // Clear the loading indicator
         projectsGrid.innerHTML = '';
         
-        // If no projects found
         if (!projects || projects.length === 0) {
           projectsGrid.innerHTML = `
             <div class="col-span-3 text-center py-16">
@@ -38,16 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         
-        // Add each project to the grid
         projects.forEach((project, index) => {
           const projectCard = createProjectCard(project, index);
           projectsGrid.innerHTML += projectCard;
         });
         
-        // Re-initialize after loading projects
         initializeFilters();
-        
-        // Initialize lightGallery if available
+
         if (typeof lightGallery === 'function') {
           document.querySelectorAll('.project-gallery').forEach(gallery => {
             lightGallery(gallery, {
@@ -66,9 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .catch(error => {
         console.error('Error loading projects:', error);
-        // Use static projects as fallback
         console.log("Using static projects as fallback");
-        // Don't clear the grid - this keeps the existing statically defined project cards
       });
 });
 

@@ -3,93 +3,867 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profix Builders - Content Manager</title>
+    <title>Profix Builders - Admin Dashboard</title>
     
-    <!-- Load Supabase first -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Load Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <style>
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#f7a825',
+              secondary: '#2c3e50',
+              accent: '#e74c3c',
+              light: '#f4f4f4',
+              dark: '#333',
+              textColor: '#4a4a4a'
+            }
+          }
+        }
       }
-      
-      .login-container {
-        max-width: 400px;
-        margin: 100px auto;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        background: white;
-      }
-      
-      .login-container h1 {
-        color: #2c3e50;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      
-      .login-form input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-      }
-      
-      .login-button {
-        width: 100%;
-        background-color: #f7a825;
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-      
-      .login-button:hover {
-        background-color: #e69716;
-      }
-
-      #cms-root {
-        height: 100%;
-      }
-    </style>
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   </head>
-  <body>
-    <!-- Login Form -->
-    <div id="login" class="login-container">
-      <h1>Profix Builders Admin</h1>
-      <form id="login-form" class="login-form">
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="submit" class="login-button">Login</button>
-      </form>
+  <body class="bg-light font-sans text-textColor min-h-screen">
+    <!-- Login Section -->
+    <div id="login-section" class="fixed inset-0 flex items-center justify-center z-50 bg-secondary/90">
+      <div class="bg-white rounded-lg p-8 shadow-2xl max-w-md w-full mx-4">
+        <div class="text-center mb-6">
+          <img src="../images/logo.png" alt="Profix Builders" class="h-16 mx-auto mb-4">
+          <h1 class="text-2xl font-bold text-secondary">Admin Login</h1>
+          <p class="text-gray-500">Sign in to manage your projects</p>
+        </div>
+        
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="email" class="block text-gray-700 mb-1">Email Address</label>
+            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+          </div>
+          
+          <div>
+            <label for="password" class="block text-gray-700 mb-1">Password</label>
+            <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" required>
+          </div>
+          
+          <button type="submit" class="w-full py-2 bg-primary text-white font-bold rounded hover:bg-primary/90 transition-colors">
+            Sign In
+          </button>
+        </form>
+      </div>
     </div>
     
-    <!-- CMS Root Element -->
-    <div id="cms-root"></div>
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-secondary text-white py-4 px-6 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+          <div class="flex items-center">
+            <img src="../images/logo.png" alt="Profix Builders" class="h-10 mr-3">
+            <h1 class="text-xl font-bold">Project Manager</h1>
+          </div>
+          
+          <div class="flex items-center">
+            <span id="user-email" class="mr-4 text-white/80"></span>
+            <button id="logout-btn" class="px-4 py-1 border border-white/60 rounded text-white/80 hover:bg-white/10 transition-colors">
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Main Content -->
+      <main class="flex-grow container mx-auto py-8 px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-2xl font-bold text-secondary">Projects</h2>
+          <button id="add-project-btn" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors flex items-center">
+            <i class="fas fa-plus mr-2"></i> Add New Project
+          </button>
+        </div>
+        
+        <!-- Projects Table -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-gray-100 text-left">
+              <tr>
+                <th class="py-3 px-4 font-semibold text-gray-700">Title</th>
+                <th class="py-3 px-4 font-semibold text-gray-700">Location</th>
+                <th class="py-3 px-4 font-semibold text-gray-700">Category</th>
+                <th class="py-3 px-4 font-semibold text-gray-700">Date</th>
+                <th class="py-3 px-4 font-semibold text-gray-700">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projects-table">
+              <tr>
+                <td colspan="5" class="py-8 text-center text-gray-500">
+                  <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+                  <p class="mt-2">Loading projects...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="py-4 px-6 text-center text-gray-500 text-sm">
+        <p>&copy; 2025 Profix Builders. All rights reserved.</p>
+      </footer>
+    </div>
     
-    <!-- Load Decap CMS after Supabase -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Project Modal (for adding/editing) -->
+    <div id="project-modal" class="fixed inset-0 bg-black/70 z-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+          <div class="flex justify-between items-center border-b border-gray-200 px-6 py-4">
+            <h3 id="modal-title" class="text-xl font-bold text-secondary">Add New Project</h3>
+            <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <form id="project-form" class="p-6">
+            <input type="hidden" id="project-id">
+            
+            <!-- Basic Info Section -->
+            <div class="space-y-6 mb-8">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="title" class="block text-gray-700 mb-1">Project Title*</label>
+                  <input type="text" id="title" name="title" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                </div>
+                
+                <div>
+                  <label for="location" class="block text-gray-700 mb-1">Location*</label>
+                  <input type="text" id="location" name="location" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="category" class="block text-gray-700 mb-1">Category*</label>
+                  <select id="category" name="category" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <option value="">Select a category</option>
+                    <option value="residential">Residential</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="renovation">Renovation</option>
+                    <option value="extension">Extension</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="thumbnail" class="block text-gray-700 mb-1">Thumbnail Image*</label>
+                  <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <div id="thumbnail-preview" class="mt-2 hidden">
+                    <img src="" alt="Thumbnail preview" class="w-full h-32 object-cover rounded">
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <label for="description" class="block text-gray-700 mb-1">Description*</label>
+                <textarea id="description" name="description" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+              </div>
+            </div>
+            
+            <!-- Project Highlights Section -->
+            <div class="mb-8">
+              <div class="flex justify-between items-center mb-2">
+                <label class="block text-gray-700 font-medium">Project Highlights*</label>
+                <button type="button" id="add-highlight" class="text-primary hover:text-primary/80 text-sm">
+                  <i class="fas fa-plus mr-1"></i> Add Highlight
+                </button>
+              </div>
+              
+              <div id="highlights-container" class="space-y-2">
+                <div class="highlight-item flex">
+                  <input type="text" name="highlights[]" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Enter a project highlight">
+                  <button type="button" class="remove-highlight ml-2 px-2 text-red-500 hover:text-red-700" style="display:none;">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Gallery Images Section -->
+            <div class="mb-8">
+              <div class="flex justify-between items-center mb-2">
+                <label class="block text-gray-700 font-medium">Gallery Images</label>
+                <button type="button" id="add-gallery-item" class="text-primary hover:text-primary/80 text-sm">
+                  <i class="fas fa-plus mr-1"></i> Add Image
+                </button>
+              </div>
+              
+              <div id="gallery-container" class="space-y-4">
+                <div class="gallery-item border border-gray-200 rounded p-4">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+                    <div class="md:col-span-1">
+                      <input type="file" name="gallery-image[]" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                      <div class="gallery-preview mt-2 hidden">
+                        <img src="" alt="Gallery preview" class="w-full h-24 object-cover rounded">
+                      </div>
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-gray-700 mb-1 text-sm">Description</label>
+                      <input type="text" name="gallery-alt[]" placeholder="Image description" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                    <div class="text-right md:absolute md:top-2 md:right-2">
+                      <button type="button" class="remove-gallery-item text-red-500 hover:text-red-700" style="display:none;">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-sm text-gray-500 mt-2">Select image files to upload for the gallery</p>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="border-t border-gray-200 pt-6 flex justify-end gap-3">
+              <button type="button" id="cancel-form" class="px-5 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition-colors">
+                Cancel
+              </button>
+              <button type="submit" class="px-5 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors">
+                Save Project
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="fixed inset-0 bg-black/70 z-50 hidden">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+          <h3 class="text-xl font-bold text-secondary mb-4">Confirm Deletion</h3>
+          <p class="text-gray-600 mb-6">Are you sure you want to delete this project? This action cannot be undone.</p>
+          
+          <div class="flex justify-end gap-3">
+            <button id="cancel-delete" class="px-5 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition-colors">
+              Cancel
+            </button>
+            <button id="confirm-delete" class="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <script>
-      // Initialize Supabase client first
+      // Supabase Configuration
       const supabaseUrl = 'https://grffvgtgvtcoiaegadap.supabase.co';
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyZmZ2Z3RndnRjb2lhZWdhZGFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjg0NTcsImV4cCI6MjA1OTYwNDQ1N30.DJtyW5sRugSeIy_m0PRRpxU86UAjcMjxBh0gTQbIT4k';
       const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       
-      // Handle login form submission
-      document.getElementById('login-form').addEventListener('submit', async (e) => {
+      // DOM Elements
+      const loginSection = document.getElementById('login-section');
+      const adminDashboard = document.getElementById('admin-dashboard');
+      const loginForm = document.getElementById('login-form');
+      const userEmail = document.getElementById('user-email');
+      const logoutBtn = document.getElementById('logout-btn');
+      const projectsTable = document.getElementById('projects-table');
+      const addProjectBtn = document.getElementById('add-project-btn');
+      const projectModal = document.getElementById('project-modal');
+      const projectForm = document.getElementById('project-form');
+      const modalTitle = document.getElementById('modal-title');
+      const closeModal = document.getElementById('close-modal');
+      const cancelForm = document.getElementById('cancel-form');
+      const addHighlightBtn = document.getElementById('add-highlight');
+      const highlightsContainer = document.getElementById('highlights-container');
+      const addGalleryItemBtn = document.getElementById('add-gallery-item');
+      const galleryContainer = document.getElementById('gallery-container');
+      const deleteModal = document.getElementById('delete-modal');
+      const cancelDelete = document.getElementById('cancel-delete');
+      const confirmDelete = document.getElementById('confirm-delete');
+      const thumbnailInput = document.getElementById('thumbnail');
+      const thumbnailPreview = document.getElementById('thumbnail-preview');
+      
+      // State variables
+      let currentProjectId = null;
+      let thumbnailFile = null;
+      let galleryFiles = [];
+      let projectImagesData = {};
+
+      // ============= AUTHENTICATION FUNCTIONS =============
+      
+      // Check if user is logged in
+      async function checkAuth() {
+        const { data } = await supabase.auth.getSession();
+        
+        if (data.session) {
+          loginSection.classList.add('hidden');
+          adminDashboard.classList.remove('hidden');
+          userEmail.textContent = data.session.user.email;
+          loadProjects();
+        } else {
+          loginSection.classList.remove('hidden');
+          adminDashboard.classList.add('hidden');
+        }
+      }
+      
+      // ============= IMAGE HANDLING FUNCTIONS =============
+
+      // Handle thumbnail preview
+      thumbnailInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          thumbnailFile = file;
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            thumbnailPreview.querySelector('img').src = e.target.result;
+            thumbnailPreview.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        } else {
+          thumbnailFile = null;
+          thumbnailPreview.classList.add('hidden');
+        }
+      });
+
+      // Handle gallery image previews
+      function setupGalleryPreviews() {
+        document.querySelectorAll('.gallery-item input[type="file"]').forEach(input => {
+          if (!input.hasEventListener) {
+            input.hasEventListener = true;
+            input.addEventListener('change', function(e) {
+              const file = e.target.files[0];
+              const previewContainer = this.closest('.gallery-item').querySelector('.gallery-preview');
+              
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                  previewContainer.querySelector('img').src = e.target.result;
+                  previewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+              } else {
+                previewContainer.classList.add('hidden');
+              }
+            });
+          }
+        });
+      }
+
+      // Convert image file to base64
+      function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+      
+      // ============= PROJECT MANAGEMENT FUNCTIONS =============
+      
+      // Load projects
+      async function loadProjects() {
+        try {
+          projectsTable.innerHTML = `
+            <tr>
+              <td colspan="5" class="py-8 text-center text-gray-500">
+                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+                <p class="mt-2">Loading projects...</p>
+              </td>
+            </tr>
+          `;
+          
+          const { data, error } = await supabase
+            .from('projects')
+            .select('*')
+            .order('created_at', { ascending: false });
+            
+          if (error) throw error;
+          
+          if (!data || data.length === 0) {
+            projectsTable.innerHTML = `
+              <tr>
+                <td colspan="5" class="py-8 text-center text-gray-500">
+                  <p class="text-lg mb-2">No projects found</p>
+                  <p class="text-sm">Click 'Add New Project' to create your first project</p>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+          
+          projectsTable.innerHTML = '';
+          
+          data.forEach(project => {
+            const created = new Date(project.created_at).toLocaleDateString();
+            const categoryDisplay = project.category.charAt(0).toUpperCase() + project.category.slice(1);
+            
+            projectsTable.innerHTML += `
+              <tr class="border-t border-gray-200 hover:bg-gray-50">
+                <td class="py-4 px-4 font-medium">${project.title}</td>
+                <td class="py-4 px-4">${project.location}</td>
+                <td class="py-4 px-4">
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
+                    ${categoryDisplay}
+                  </span>
+                </td>
+                <td class="py-4 px-4">${created}</td>
+                <td class="py-4 px-4">
+                  <div class="flex space-x-2">
+                    <button class="text-blue-600 hover:text-blue-800" data-action="edit" data-id="${project.id}">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="text-red-600 hover:text-red-800" data-action="delete" data-id="${project.id}">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          });
+          
+          // Add event listeners to action buttons
+          document.querySelectorAll('[data-action="edit"]').forEach(button => {
+            button.addEventListener('click', () => editProject(button.dataset.id));
+          });
+          
+          document.querySelectorAll('[data-action="delete"]').forEach(button => {
+            button.addEventListener('click', () => openDeleteModal(button.dataset.id));
+          });
+          
+        } catch (error) {
+          console.error('Error loading projects:', error);
+          projectsTable.innerHTML = `
+            <tr>
+              <td colspan="5" class="py-8 text-center text-gray-500">
+                <p class="text-lg mb-2">Error loading projects</p>
+                <p class="text-sm">${error.message || 'Please try again later'}</p>
+              </td>
+            </tr>
+          `;
+        }
+      }
+      
+      // Open modal for adding new project
+      function openAddModal() {
+        modalTitle.textContent = 'Add New Project';
+        projectForm.reset();
+        document.getElementById('project-id').value = '';
+        currentProjectId = null;
+        thumbnailFile = null;
+        galleryFiles = [];
+        projectImagesData = {};
+        
+        // Reset thumbnail preview
+        thumbnailPreview.classList.add('hidden');
+        thumbnailPreview.querySelector('img').src = '';
+        
+        // Reset highlight items
+        highlightsContainer.innerHTML = `
+          <div class="highlight-item flex">
+            <input type="text" name="highlights[]" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Enter a project highlight">
+            <button type="button" class="remove-highlight ml-2 px-2 text-red-500 hover:text-red-700" style="display:none;">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+        
+        // Reset gallery items
+        galleryContainer.innerHTML = `
+          <div class="gallery-item border border-gray-200 rounded p-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+              <div class="md:col-span-1">
+                <input type="file" name="gallery-image[]" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <div class="gallery-preview mt-2 hidden">
+                  <img src="" alt="Gallery preview" class="w-full h-24 object-cover rounded">
+                </div>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-gray-700 mb-1 text-sm">Description</label>
+                <input type="text" name="gallery-alt[]" placeholder="Image description" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+              </div>
+              <div class="text-right md:absolute md:top-2 md:right-2">
+                <button type="button" class="remove-gallery-item text-red-500 hover:text-red-700" style="display:none;">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        setupGalleryPreviews();
+        projectModal.classList.remove('hidden');
+      }
+      
+      // Open modal for editing project
+      async function editProject(id) {
+        try {
+          modalTitle.textContent = 'Edit Project';
+          currentProjectId = id;
+          document.getElementById('project-id').value = id;
+          
+          const { data, error } = await supabase
+            .from('projects')
+            .select('*')
+            .eq('id', id)
+            .single();
+            
+          if (error) throw error;
+          
+          // Store project data for image handling
+          projectImagesData = {
+            thumbnail: data.thumbnail || '',
+            gallery: data.gallery || []
+          };
+          
+          // Fill basic info
+          document.getElementById('title').value = data.title || '';
+          document.getElementById('location').value = data.location || '';
+          document.getElementById('category').value = data.category || '';
+          document.getElementById('description').value = data.description || '';
+          
+          // Set thumbnail preview if exists
+          if (data.thumbnail && data.thumbnail.startsWith('data:image')) {
+            thumbnailPreview.querySelector('img').src = data.thumbnail;
+            thumbnailPreview.classList.remove('hidden');
+          } else {
+            thumbnailPreview.classList.add('hidden');
+          }
+          
+          // Fill highlights
+          highlightsContainer.innerHTML = '';
+          
+          if (data.highlights && data.highlights.length > 0) {
+            data.highlights.forEach((highlight, index) => {
+              const showRemoveButton = data.highlights.length > 1;
+              
+              highlightsContainer.innerHTML += `
+                <div class="highlight-item flex">
+                  <input type="text" name="highlights[]" value="${highlight}" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <button type="button" class="remove-highlight ml-2 px-2 text-red-500 hover:text-red-700" ${!showRemoveButton ? 'style="display:none;"' : ''}>
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              `;
+            });
+          } else {
+            // Add default empty highlight field
+            highlightsContainer.innerHTML = `
+              <div class="highlight-item flex">
+                <input type="text" name="highlights[]" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Enter a project highlight">
+                <button type="button" class="remove-highlight ml-2 px-2 text-red-500 hover:text-red-700" style="display:none;">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            `;
+          }
+          
+          // Add event listeners to remove highlight buttons
+          document.querySelectorAll('.remove-highlight').forEach(button => {
+            button.addEventListener('click', function() {
+              this.closest('.highlight-item').remove();
+              updateRemoveButtons('.highlight-item', '.remove-highlight');
+            });
+          });
+          
+          // Fill gallery items
+          galleryContainer.innerHTML = '';
+          
+          if (data.gallery && data.gallery.length > 0) {
+            data.gallery.forEach((item, index) => {
+              const showRemoveButton = data.gallery.length > 1;
+              
+              galleryContainer.innerHTML += `
+                <div class="gallery-item border border-gray-200 rounded p-4">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+                    <div class="md:col-span-1">
+                      <input type="file" name="gallery-image[]" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                      <div class="gallery-preview mt-2 ${item.image ? '' : 'hidden'}">
+                        <img src="${item.image || ''}" alt="Gallery preview" class="w-full h-24 object-cover rounded">
+                      </div>
+                      <input type="hidden" name="gallery-existing[]" value="${item.image || ''}">
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-gray-700 mb-1 text-sm">Description</label>
+                      <input type="text" name="gallery-alt[]" value="${item.alt || ''}" placeholder="Image description" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                    <div class="text-right md:absolute md:top-2 md:right-2">
+                      <button type="button" class="remove-gallery-item text-red-500 hover:text-red-700" ${!showRemoveButton ? 'style="display:none;"' : ''}>
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            });
+          } else {
+            // Add default empty gallery field
+            galleryContainer.innerHTML = `
+              <div class="gallery-item border border-gray-200 rounded p-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+                  <div class="md:col-span-1">
+                    <input type="file" name="gallery-image[]" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <div class="gallery-preview mt-2 hidden">
+                      <img src="" alt="Gallery preview" class="w-full h-24 object-cover rounded">
+                    </div>
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="block text-gray-700 mb-1 text-sm">Description</label>
+                    <input type="text" name="gallery-alt[]" placeholder="Image description" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  </div>
+                  <div class="text-right md:absolute md:top-2 md:right-2">
+                    <button type="button" class="remove-gallery-item text-red-500 hover:text-red-700" style="display:none;">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+          
+          // Add event listeners to remove gallery buttons
+          document.querySelectorAll('.remove-gallery-item').forEach(button => {
+            button.addEventListener('click', function() {
+              this.closest('.gallery-item').remove();
+              updateRemoveButtons('.gallery-item', '.remove-gallery-item');
+            });
+          });
+          
+          setupGalleryPreviews();
+          projectModal.classList.remove('hidden');
+          
+        } catch (error) {
+          console.error('Error loading project for edit:', error);
+          alert('Error loading project data: ' + (error.message || 'Please try again'));
+        }
+      }
+      
+      // Add highlight input
+      function addHighlightItem() {
+        const newHighlight = document.createElement('div');
+        newHighlight.className = 'highlight-item flex';
+        newHighlight.innerHTML = `
+          <input type="text" name="highlights[]" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Enter a project highlight">
+          <button type="button" class="remove-highlight ml-2 px-2 text-red-500 hover:text-red-700">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        `;
+        
+        highlightsContainer.appendChild(newHighlight);
+        
+        newHighlight.querySelector('.remove-highlight').addEventListener('click', function() {
+          newHighlight.remove();
+          updateRemoveButtons('.highlight-item', '.remove-highlight');
+        });
+        
+        updateRemoveButtons('.highlight-item', '.remove-highlight');
+      }
+      
+      // Add gallery item input
+      function addGalleryItem() {
+        const newGalleryItem = document.createElement('div');
+        newGalleryItem.className = 'gallery-item border border-gray-200 rounded p-4';
+        newGalleryItem.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+            <div class="md:col-span-1">
+              <input type="file" name="gallery-image[]" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <div class="gallery-preview mt-2 hidden">
+                <img src="" alt="Gallery preview" class="w-full h-24 object-cover rounded">
+              </div>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-gray-700 mb-1 text-sm">Description</label>
+              <input type="text" name="gallery-alt[]" placeholder="Image description" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50">
+            </div>
+            <div class="text-right md:absolute md:top-2 md:right-2">
+              <button type="button" class="remove-gallery-item text-red-500 hover:text-red-700">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        
+        galleryContainer.appendChild(newGalleryItem);
+        
+        const fileInput = newGalleryItem.querySelector('input[type="file"]');
+        const previewContainer = newGalleryItem.querySelector('.gallery-preview');
+        
+        fileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              previewContainer.querySelector('img').src = e.target.result;
+              previewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+          } else {
+            previewContainer.classList.add('hidden');
+          }
+        });
+        
+        newGalleryItem.querySelector('.remove-gallery-item').addEventListener('click', function() {
+          newGalleryItem.remove();
+          updateRemoveButtons('.gallery-item', '.remove-gallery-item');
+        });
+        
+        updateRemoveButtons('.gallery-item', '.remove-gallery-item');
+      }
+      
+      // Open delete confirmation modal
+      function openDeleteModal(id) {
+        currentProjectId = id;
+        deleteModal.classList.remove('hidden');
+      }
+      
+      // Helper function to update remove buttons visibility
+      function updateRemoveButtons(itemSelector, buttonSelector) {
+        const items = document.querySelectorAll(itemSelector);
+        const showRemoveButtons = items.length > 1;
+        
+        items.forEach(item => {
+          const removeButton = item.querySelector(buttonSelector);
+          if (removeButton) {
+            removeButton.style.display = showRemoveButtons ? 'block' : 'none';
+          }
+        });
+      }
+      
+      // Submit form data
+      async function submitForm(e) {
         e.preventDefault();
         
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        try {
+          // First prepare the base form data
+          const formData = {
+            title: document.getElementById('title').value,
+            location: document.getElementById('location').value,
+            category: document.getElementById('category').value,
+            description: document.getElementById('description').value,
+            highlights: Array.from(document.querySelectorAll('input[name="highlights[]"]'))
+              .map(input => input.value)
+              .filter(value => value.trim() !== '')
+          };
+          
+          if (formData.highlights.length === 0) {
+            throw new Error('Please add at least one project highlight');
+          }
+          
+          // Process thumbnail image
+          const thumbnailInput = document.getElementById('thumbnail');
+          if (thumbnailInput.files && thumbnailInput.files[0]) {
+            formData.thumbnail = await fileToBase64(thumbnailInput.files[0]);
+          } else if (currentProjectId) {
+            // Keep existing thumbnail if editing
+            formData.thumbnail = projectImagesData.thumbnail;
+          } else {
+            throw new Error('Please select a thumbnail image');
+          }
+          
+          // Process gallery images
+          const galleryItems = document.querySelectorAll('.gallery-item');
+          const gallery = [];
+          
+          for (let i = 0; i < galleryItems.length; i++) {
+            const item = galleryItems[i];
+            const fileInput = item.querySelector('input[type="file"]');
+            const existingImageInput = item.querySelector('input[name="gallery-existing[]"]');
+            const altInput = item.querySelector('input[name="gallery-alt[]"]');
+            const alt = altInput.value;
+            
+            let image = '';
+            
+            if (fileInput.files && fileInput.files[0]) {
+              // New file uploaded
+              image = await fileToBase64(fileInput.files[0]);
+            } else if (existingImageInput && existingImageInput.value) {
+              // Keep existing image
+              image = existingImageInput.value;
+            }
+            
+            if (image) {
+              gallery.push({
+                image,
+                alt
+              });
+            }
+          }
+          
+          formData.gallery = gallery;
+          
+          let result;
+          
+          if (currentProjectId) {
+            // Update existing project
+            result = await supabase
+              .from('projects')
+              .update(formData)
+              .eq('id', currentProjectId);
+          } else {
+            // Add new project with timestamp
+            formData.created_at = new Date().toISOString();
+            result = await supabase
+              .from('projects')
+              .insert([formData]);
+          }
+          
+          if (result.error) throw result.error;
+          
+          // Close modal and reload projects
+          projectModal.classList.add('hidden');
+          loadProjects();
+          
+          // Show success notification
+          const action = currentProjectId ? 'updated' : 'added';
+          alert(`Project successfully ${action}!`);
+          
+        } catch (error) {
+          console.error('Error saving project:', error);
+          alert('Error saving project: ' + (error.message || 'Please try again'));
+        }
+      }
+      
+      // Delete project
+      async function deleteProject() {
+        try {
+          const { error } = await supabase
+            .from('projects')
+            .delete()
+            .eq('id', currentProjectId);
+            
+          if (error) throw error;
+          
+          // Close modal and reload projects
+          deleteModal.classList.add('hidden');
+          loadProjects();
+          
+          // Show success notification
+          alert('Project successfully deleted!');
+          
+        } catch (error) {
+          console.error('Error deleting project:', error);
+          alert('Error deleting project: ' + (error.message || 'Please try again'));
+        }
+      }
+      
+      // ============= EVENT LISTENERS =============
+      
+      // Check auth status when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        checkAuth();
+        setupGalleryPreviews();
+      });
+      
+      // Login form submission
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
         try {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          
           const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password
@@ -97,49 +871,58 @@
           
           if (error) throw error;
           
-          // Hide login form, CMS will initialize
-          document.getElementById('login').style.display = 'none';
-          
-          // Initialize CMS with auth token
-          window.CMS.init({
-            config: {
-              backend: {
-                name: 'git-gateway',
-                repo: 'Sabredeval/profix-builder',
-                auth_token: data.session.access_token,
-              }
-            }
-          });
+          checkAuth();
           
         } catch (error) {
-          alert('Login failed: ' + error.message);
+          console.error('Login error:', error);
+          alert('Login failed: ' + (error.message || 'Invalid credentials'));
         }
       });
       
-      // Check if user is already logged in
-      (async () => {
+      // Logout button
+      logoutBtn.addEventListener('click', async function() {
         try {
-          const { data } = await supabase.auth.getSession();
-          
-          if (data.session) {
-            // Already logged in
-            document.getElementById('login').style.display = 'none';
-            
-            // Initialize CMS with auth token
-            window.CMS.init({
-              config: {
-                backend: {
-                  name: 'git-gateway',
-                  repo: 'Sabredeval/profix-builder',
-                  auth_token: data.session.access_token,
-                }
-              }
-            });
-          }
+          const { error } = await supabase.auth.signOut();
+          if (error) throw error;
+          checkAuth();
         } catch (error) {
-          console.error("Auth check failed:", error);
+          console.error('Logout error:', error);
+          alert('Logout failed: ' + error.message);
         }
-      })();
+      });
+      
+      // Add project button
+      addProjectBtn.addEventListener('click', openAddModal);
+      
+      // Close modal buttons
+      closeModal.addEventListener('click', () => projectModal.classList.add('hidden'));
+      cancelForm.addEventListener('click', () => projectModal.classList.add('hidden'));
+      
+      // Project form submission
+      projectForm.addEventListener('submit', submitForm);
+      
+      // Add highlight button
+      addHighlightBtn.addEventListener('click', addHighlightItem);
+      
+      // Add gallery item button
+      addGalleryItemBtn.addEventListener('click', addGalleryItem);
+      
+      // Delete modal buttons
+      cancelDelete.addEventListener('click', () => deleteModal.classList.add('hidden'));
+      confirmDelete.addEventListener('click', deleteProject);
+      
+      // Close modals when clicking outside
+      projectModal.addEventListener('click', function(e) {
+        if (e.target === projectModal) {
+          projectModal.classList.add('hidden');
+        }
+      });
+      
+      deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) {
+          deleteModal.classList.add('hidden');
+        }
+      });
     </script>
   </body>
 </html>
