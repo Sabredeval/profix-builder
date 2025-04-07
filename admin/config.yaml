@@ -1,0 +1,28 @@
+backend:
+  name: git-gateway
+  branch: master
+  repo: Sabredeval/profix-builder
+  auth_endpoint: https://grffvgtgvtcoiaegadap.supabase.co/auth/v1
+
+media_folder: "images/projects"
+public_folder: "/images/projects"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "_projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Location", name: "location", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["residential", "commercial", "renovation", "extension"]}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Project Highlights", name: "highlights", widget: "list"}
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        fields:
+          - {label: "Image", name: "image", widget: "image"}
+          - {label: "Alt Text", name: "alt", widget: "string"}
