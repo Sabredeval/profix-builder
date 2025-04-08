@@ -7,9 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lg-zoom.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/css/lg-thumbnail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lg-zoom.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lg-thumbnail.css" />
     <script>
         tailwind.config = {
             theme: {
@@ -62,6 +62,48 @@
         }
         .project-modal {
             transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .project-card-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .modal-gallery-item {
+            height: 100px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .modal-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .modal-gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        #project-loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color, #f7a825);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -134,162 +176,14 @@
         <!-- Projects Grid -->
         <section class="py-16 px-5 bg-light">
             <div class="container mx-auto max-w-7xl">
+                <!-- Project loader -->
+                <div id="project-loader" class="py-12">
+                    <div class="loader"></div>
+                </div>
+
+                <!-- Projects container -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                    <!-- Project 2 - Heritage Home Restoration -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="150" data-category="renovation">
-                        <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home Restoration" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
-                        </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-secondary">Heritage Home Restoration</h3>
-                                <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Hampstead</span>
-                            </div>
-                            <p class="text-gray-600 mb-5">Sensitive restoration of a Grade II listed Georgian townhouse, preserving period features while incorporating modern amenities.</p>
-                            
-                            <!-- Project Details -->
-                            <div class="mb-5">
-                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Restoration of original Georgian features</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Modern kitchen and bathrooms with period styling</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Energy-efficient upgrades with heritage approval</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Gallery Preview -->
-                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-2">
-                                <a href="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Heritage Home" class="w-full h-32 object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1592152045578-7aa07f0d3177?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1592152045578-7aa07f0d3177?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Period Staircase" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1599327286062-40b0a7f2b305?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1599327286062-40b0a7f2b305?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Living Room" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                            </div>
-                            
-                            <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="2">
-                                <span>View Full Project</span>
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 - Modern Family Home -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="200" data-category="extension">
-                        <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Family Home" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
-                        </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-secondary">Modern Family Home</h3>
-                                <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Richmond</span>
-                            </div>
-                            <p class="text-gray-600 mb-5">Complete renovation and extension of a family home, creating open living spaces with abundant natural light.</p>
-                            
-                            <!-- Project Details -->
-                            <div class="mb-5">
-                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Open-plan kitchen and living extension</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Floor-to-ceiling glass doors to garden</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Integrated smart home technology</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Gallery Preview -->
-                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-3">
-                                <a href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Family Home" class="w-full h-32 object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Kitchen & Dining" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Modern Living Room" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                            </div>
-                            
-                            <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="3">
-                                <span>View Full Project</span>
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Project 4 - Office Building Renovation -->
-                    <div class="project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col" data-aos="fade-up" data-aos-delay="250" data-category="commercial">
-                        <div class="h-64 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building Renovation" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
-                        </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-3">
-                                <h3 class="text-xl font-bold text-secondary">Office Building Renovation</h3>
-                                <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">Central London</span>
-                            </div>
-                            <p class="text-gray-600 mb-5">Comprehensive renovation of a three-story office building, including modern workspaces and conference rooms.</p>
-                            
-                            <!-- Project Details -->
-                            <div class="mb-5">
-                                <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Flexible open-plan workspace design</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>State-of-the-art conference facilities</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
-                                        <span>Energy-efficient lighting and HVAC systems</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Gallery Preview -->
-                            <div class="grid grid-cols-3 gap-2 mb-5 project-gallery" id="gallery-4">
-                                <a href="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="col-span-2 row-span-2 gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Office Building" class="w-full h-32 object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Office Space" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                                <a href="https://images.unsplash.com/photo-1497215842964-222b430dc094?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Office Design" class="w-full h-[60px] object-cover rounded-md">
-                                </a>
-                            </div>
-                            
-                            <!-- View Project Button -->
-                            <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="4">
-                                <span>View Full Project</span>
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- Projects will be loaded dynamically -->
                 </div>
 
                 <!-- No Results Message -->
@@ -303,16 +197,68 @@
             </div>
         </section>
 
-        <!-- Project Modal Templates (Hidden by default) -->
+        <!-- Project Detail Modal -->
         <div class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center project-modal" id="project-modal">
-            <div class="bg-white rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto mx-5 relative">
-                <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-primary transition-colors duration-300 close-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <div class="p-8" id="modal-content">
-                    <!-- Content will be dynamically loaded here -->
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto mx-5 relative">
+                    <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-primary transition-colors duration-300 z-10 close-modal bg-white/80 w-10 h-10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="p-8" id="modal-content">
+                        <!-- Content will be loaded dynamically -->
+                        <div class="animate-pulse">
+                            <div class="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+                            <div class="h-4 bg-gray-200 rounded w-1/4 mb-6"></div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div class="space-y-4">
+                                    <div class="h-64 bg-gray-200 rounded w-full"></div>
+                                    <div class="grid grid-cols-4 gap-2">
+                                        <div class="h-16 bg-gray-200 rounded"></div>
+                                        <div class="h-16 bg-gray-200 rounded"></div>
+                                        <div class="h-16 bg-gray-200 rounded"></div>
+                                        <div class="h-16 bg-gray-200 rounded"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-3/4 mb-6"></div>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <div class="h-5 bg-gray-200 rounded w-1/3 mb-2"></div>
+                                            <div class="h-4 bg-gray-200 rounded w-full mb-1"></div>
+                                            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                                        </div>
+                                        <div>
+                                            <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+                                            <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center">
+                                <div class="h-10 bg-gray-200 rounded w-48"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Image Gallery Modal -->
+        <div class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center" id="gallery-modal">
+            <button class="absolute top-4 right-4 text-2xl text-white hover:text-primary transition-colors duration-300 z-10 close-gallery bg-black/30 w-10 h-10 rounded-full flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="w-full max-w-6xl mx-auto px-4" id="gallery-container">
+                <!-- Gallery will be initialized here -->
             </div>
         </div>
 
@@ -421,98 +367,29 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/lightgallery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/zoom/lg-zoom.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0/plugins/thumbnail/lg-thumbnail.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
     
     <script>
-        // Project data for modal content
-        const projectData = {
-            1: {
-                title: "Luxury Apartment Renovation",
-                location: "Kensington, London",
-                description: "This high-end apartment renovation showcases our commitment to luxury and attention to detail. The project involved a complete transformation of a 3-bedroom apartment in the heart of Kensington.",
-                scope: "Complete renovation including designer kitchen, two bathrooms, custom built-in furniture, and premium hardwood flooring throughout.",
-                duration: "16 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1560518883-ce09059eeffa", alt: "Living Room"},
-                    {src: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92", alt: "Kitchen Detail"},
-                    {src: "https://images.unsplash.com/photo-1574739782594-db4ead022697", alt: "Kitchen"},
-                    {src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea", alt: "Bathroom"},
-                    {src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", alt: "Bedroom"}
-                ],
-            },
-            2: {
-                title: "Heritage Home Restoration",
-                location: "Hampstead, London",
-                description: "This sensitive restoration project involved preserving and enhancing the historical features of a Grade II listed Georgian townhouse while incorporating modern amenities.",
-                scope: "Full restoration of period features, modernization of services, kitchen and bathroom upgrades, and energy efficiency improvements.",
-                duration: "24 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0", alt: "Heritage Home"},
-                    {src: "https://images.unsplash.com/photo-1592152045578-7aa07f0d3177", alt: "Period Staircase"},
-                    {src: "https://images.unsplash.com/photo-1599327286062-40b0a7f2b305", alt: "Living Room"},
-                    {src: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83", alt: "Kitchen"},
-                    {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Period Features"}
-                ],
-            },
-            3: {
-                title: "Modern Family Home Extension",
-                location: "Richmond, London",
-                description: "This project involved extending and renovating a family home to create light-filled open living spaces with a contemporary design aesthetic.",
-                scope: "Rear and side extension, open-plan kitchen and living area, new master bedroom suite, and landscaped garden.",
-                duration: "20 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c", alt: "Family Home"},
-                    {src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c", alt: "Kitchen & Dining"},
-                    {src: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde", alt: "Modern Living Room"},
-                    {src: "https://images.unsplash.com/photo-1604014237800-1c9102c219da", alt: "Bedroom"},
-                    {src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3", alt: "Bathroom"}
-                ],
-            },
-            4: {
-                title: "Office Building Renovation",
-                location: "Central London",
-                description: "This comprehensive commercial renovation transformed an outdated office building into a modern, efficient workspace suitable for contemporary business needs.",
-                scope: "Complete renovation of three floors including open-plan workspaces, meeting rooms, reception area, and staff facilities.",
-                duration: "18 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2", alt: "Office Building"},
-                    {src: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7", alt: "Office Space"},
-                    {src: "https://images.unsplash.com/photo-1497215842964-222b430dc094", alt: "Office Design"},
-                    {src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174", alt: "Meeting Room"},
-                    {src: "https://images.unsplash.com/photo-1568992688097-33a7cba3d7e9", alt: "Reception Area"}
-                ],
-            },
-            5: {
-                title: "Boutique Hotel Conversion",
-                location: "Shoreditch, London",
-                description: "This exciting project involved converting a former office building into a stylish 22-room boutique hotel in the heart of trendy Shoreditch.",
-                scope: "Complete building conversion including 22 en-suite bedrooms, reception area, restaurant, bar, and rooftop terrace.",
-                duration: "32 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3", alt: "Hotel Exterior"},
-                    {src: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa", alt: "Hotel Lobby"},
-                    {src: "https://images.unsplash.com/photo-1560624052-449f5ddf0c31", alt: "Hotel Bar"},
-                    {src: "https://images.unsplash.com/photo-1564501049412-61c2a3083791", alt: "Hotel Room"},
-                    {src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d", alt: "Rooftop Terrace"}
-                ],
-            },
-            6: {
-                title: "Luxury Kitchen Renovation",
-                location: "Chelsea, London",
-                description: "This premium kitchen renovation project showcases our expertise in creating beautiful, functional spaces with high-end finishes and appliances.",
-                scope: "Complete kitchen redesign including custom cabinetry, premium appliances, specialist lighting, and luxury finishes.",
-                duration: "8 weeks",
-                images: [
-                    {src: "https://images.unsplash.com/photo-1574739782594-db4ead022697", alt: "Kitchen Overview"},
-                    {src: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b", alt: "Kitchen Detail"},
-                    {src: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea", alt: "Kitchen Island"},
-                    {src: "https://images.unsplash.com/photo-1600585152220-90363fe7e115", alt: "Cabinet Details"},
-                    {src: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a", alt: "Appliances"}
-                ],
-            }
-        };
+        // Supabase Configuration
+        const supabaseUrl = 'https://grffvgtgvtcoiaegadap.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyZmZ2Z3RndnRjb2lhZWdhZGFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjg0NTcsImV4cCI6MjA1OTYwNDQ1N30.DJtyW5sRugSeIy_m0PRRpxU86UAjcMjxBh0gTQbIT4k';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // DOM Elements
+        const projectsGrid = document.getElementById('projects-grid');
+        const projectModal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-content');
+        const galleryModal = document.getElementById('gallery-modal');
+        const galleryContainer = document.getElementById('gallery-container');
+        const projectLoader = document.getElementById('project-loader');
+        const noResults = document.getElementById('no-results');
+        
+        // Store all projects for filtering
+        let allProjects = [];
+        let lightGalleryInstance = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize AOS
@@ -521,20 +398,402 @@
                 easing: 'ease-in-out',
                 once: true
             });
+            
+            // Header scroll effect
+            setupHeaderScroll();
+            
+            // Mobile menu toggle
+            setupMobileMenu();
+            
+            // Load projects from Supabase
+            loadProjects();
+            
+            // Set up filter buttons
+            setupFilterButtons();
+            
+            // Close modal buttons
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', closeProjectModal);
+            });
+            
+            document.querySelectorAll('.close-gallery').forEach(btn => {
+                btn.addEventListener('click', closeGalleryModal);
+            });
+            
+            // Close modals with escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (!projectModal.classList.contains('hidden')) {
+                        closeProjectModal();
+                    }
+                    if (!galleryModal.classList.contains('hidden')) {
+                        closeGalleryModal();
+                    }
+                }
+            });
+            
+            // Close modals when clicking outside
+            projectModal.addEventListener('click', function(e) {
+                if (e.target === projectModal) {
+                    closeProjectModal();
+                }
+            });
+            
+            galleryModal.addEventListener('click', function(e) {
+                if (e.target === galleryModal) {
+                    closeGalleryModal();
+                }
+            });
+        });
 
-            // Initialize LightGallery for each gallery
-            document.querySelectorAll('.project-gallery').forEach(gallery => {
-                lightGallery(gallery, {
-                    selector: '.gallery-item',
-                    plugins: [lgZoom, lgThumbnail],
-                    speed: 500,
-                    download: false,
-                    counter: false,
-                    zoomFromOrigin: false
+        // ========== FUNCTIONS ==========
+
+        async function loadProjects() {
+            try {
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                // Hide loader
+                projectLoader.style.display = 'none';
+                
+                if (!data || data.length === 0) {
+                    noResults.classList.remove('hidden');
+                    return;
+                }
+                
+                // Store projects for filtering
+                allProjects = data;
+                
+                // Render projects
+                renderProjects(data);
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                projectLoader.style.display = 'none';
+                projectsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-4xl text-red-500 mb-4">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-secondary mb-2">Error Loading Projects</h3>
+                        <p class="text-gray-600">Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderProjects(projects) {
+            projectsGrid.innerHTML = '';
+            
+            if (projects.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+            
+            projects.forEach((project, index) => {
+                const highlights = project.highlights || [];
+                const delay = 100 + (index * 50);
+                const category = project.category || 'uncategorized';
+                const projectCard = document.createElement('div');
+                
+                projectCard.className = 'project-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl h-full flex flex-col';
+                projectCard.setAttribute('data-aos', 'fade-up');
+                projectCard.setAttribute('data-aos-delay', delay);
+                projectCard.setAttribute('data-category', category);
+                
+                projectCard.innerHTML = `
+                    <div class="h-64 overflow-hidden">
+                        <img src="${project.thumbnail}" alt="${project.title}" class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold text-secondary">${project.title}</h3>
+                            <span class="text-xs font-semibold bg-primary/10 text-primary px-3 py-1 rounded-full">${project.location}</span>
+                        </div>
+                        <p class="text-gray-600 mb-5">${project.description.substring(0, 120)}${project.description.length > 120 ? '...' : ''}</p>
+                        
+                        <!-- Project Details -->
+                        <div class="mb-5">
+                            <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
+                            <ul class="space-y-1 text-gray-600">
+                                ${highlights.slice(0, 3).map(highlight => `
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-primary mt-1 mr-2 text-sm"></i>
+                                        <span>${highlight}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <!-- View Project Button -->
+                        <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="${project.id}">
+                            <span>View Full Project</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                `;
+                
+                projectsGrid.appendChild(projectCard);
+            });
+            
+            // Initialize view project buttons
+            document.querySelectorAll('.view-project-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const projectId = this.getAttribute('data-project');
+                    openProjectModal(projectId);
                 });
             });
             
-            // Header scroll effect
+            // Re-initialize AOS
+            AOS.refresh();
+        }
+
+        async function openProjectModal(projectId) {
+            // Show the modal with loading state
+            projectModal.classList.remove('hidden');
+            projectModal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+            
+            try {
+                // Find the project in the cached data first
+                let project = allProjects.find(p => p.id == projectId);
+                
+                // If not found, fetch it from Supabase
+                if (!project) {
+                    const { data, error } = await supabase
+                        .from('projects')
+                        .select('*')
+                        .eq('id', projectId)
+                        .single();
+                    
+                    if (error) throw error;
+                    project = data;
+                }
+                
+                if (!project) {
+                    throw new Error('Project not found');
+                }
+                
+                // Build the gallery items HTML
+                let galleryItemsHtml = '';
+                if (project.gallery && project.gallery.length > 0) {
+                    project.gallery.forEach((item, index) => {
+                        if (index < 8) { // Limit preview to 8 images
+                            galleryItemsHtml += `
+                                <div class="modal-gallery-item cursor-pointer" data-index="${index}">
+                                    <img src="${item.image}" alt="${item.alt || project.title}">
+                                </div>
+                            `;
+                        }
+                    });
+                    
+                    if (project.gallery.length > 8) {
+                        galleryItemsHtml += `
+                            <div class="modal-gallery-item cursor-pointer more-images" data-index="8">
+                                <div class="relative w-full h-full">
+                                    <img src="${project.gallery[8].image}" alt="${project.gallery[8].alt || project.title}" class="opacity-60">
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+                                        <span class="text-white font-bold text-lg">+${project.gallery.length - 8} more</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                // Prepare the project highlights
+                const highlights = project.highlights || [];
+                const highlightsHtml = highlights.map(highlight => 
+                    `<li class="flex items-start mb-2">
+                        <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                        <span>${highlight}</span>
+                    </li>`
+                ).join('');
+                
+                // Build the modal content HTML
+                const html = `
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-secondary mb-2">${project.title}</h2>
+                        <div class="flex items-center">
+                            <span class="text-primary font-medium">${project.location}</span>
+                            <span class="mx-3 text-gray-400">•</span>
+                            <span class="text-gray-500 font-medium capitalize">${project.category}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <div class="rounded-lg overflow-hidden shadow-md mb-4">
+                                <img src="${project.thumbnail}" alt="${project.title}" class="w-full h-auto">
+                            </div>
+                            
+                            <div class="modal-gallery grid grid-cols-4 gap-2">
+                                ${galleryItemsHtml}
+                            </div>
+                            
+                            ${project.gallery && project.gallery.length > 0 ? `
+                                <div class="mt-4 text-center">
+                                    <button class="view-all-photos px-5 py-2 bg-light hover:bg-gray-200 text-secondary font-medium rounded-md transition-colors">
+                                        <i class="fas fa-images mr-2"></i> View All Photos
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-secondary mb-4">Project Overview</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">${project.description}</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-secondary mb-3">Project Highlights:</h4>
+                                <ul class="space-y-1 text-gray-600">
+                                    ${highlightsHtml}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 text-center">
+                        <a href="contact.html" class="inline-block px-8 py-3 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
+                            Discuss Your Project
+                        </a>
+                    </div>
+                `;
+                
+                // Set the modal content
+                modalContent.innerHTML = html;
+                
+                // Initialize gallery preview click handlers
+                const galleryItems = modalContent.querySelectorAll('.modal-gallery-item');
+                galleryItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        openGalleryModal(project);
+                    });
+                });
+                
+                // Initialize view all photos button
+                const viewAllBtn = modalContent.querySelector('.view-all-photos');
+                if (viewAllBtn) {
+                    viewAllBtn.addEventListener('click', function() {
+                        openGalleryModal(project);
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error opening project modal:', error);
+                modalContent.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-5xl text-red-500 mb-4">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-secondary mb-2">Error Loading Project</h3>
+                        <p class="text-gray-600 mb-8">${error.message || 'Please try again later'}</p>
+                        <button class="px-6 py-2 bg-primary text-white rounded-md close-modal">Close</button>
+                    </div>
+                `;
+                
+                modalContent.querySelector('.close-modal').addEventListener('click', closeProjectModal);
+            }
+        }
+
+        function openGalleryModal(project) {
+            // Make sure we have gallery images
+            if (!project.gallery || project.gallery.length === 0) {
+                return;
+            }
+            
+            // Show the gallery modal
+            galleryModal.classList.remove('hidden');
+            galleryModal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+            
+            // Clear previous gallery
+            galleryContainer.innerHTML = '<div id="gallery-instance"></div>';
+            
+            // Create gallery items array for lightGallery
+            const galleryItems = [];
+            project.gallery.forEach(item => {
+                galleryItems.push({
+                    src: item.image,
+                    thumb: item.image,
+                    subHtml: `<h4>${project.title}</h4><p>${item.alt || ''}</p>`
+                });
+            });
+            
+            // Initialize lightGallery
+            const galleryElement = document.getElementById('gallery-instance');
+            lightGalleryInstance = lightGallery(galleryElement, {
+                dynamic: true,
+                dynamicEl: galleryItems,
+                plugins: [lgZoom, lgThumbnail],
+                speed: 500,
+                download: false,
+                closeOnTap: false,
+                getCaptionFromTitleOrAlt: true,
+                mobileSettings: {
+                    controls: true,
+                    showCloseIcon: true,
+                    download: false
+                }
+            });
+            
+            // Open gallery immediately
+            lightGalleryInstance.openGallery(0);
+        }
+
+        function closeProjectModal() {
+            projectModal.classList.add('hidden');
+            projectModal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function closeGalleryModal() {
+            if (lightGalleryInstance) {
+                lightGalleryInstance.destroy();
+                lightGalleryInstance = null;
+            }
+            galleryModal.classList.add('hidden');
+            galleryModal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function setupFilterButtons() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-secondary', 'text-white');
+                        b.classList.add('bg-light', 'text-secondary');
+                    });
+                    
+                    this.classList.remove('bg-light', 'text-secondary');
+                    this.classList.add('bg-secondary', 'text-white');
+                    
+                    // Get filter value
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Filter projects
+                    if (filterValue === 'all') {
+                        renderProjects(allProjects);
+                    } else {
+                        const filteredProjects = allProjects.filter(project => 
+                            project.category === filterValue
+                        );
+                        renderProjects(filteredProjects);
+                    }
+                });
+            });
+        }
+
+        function setupHeaderScroll() {
             const header = document.getElementById('header');
             const headerLinks = header.querySelectorAll('ul > li > a');
             const headerLogo = header.querySelector('.logo span');
@@ -573,155 +832,16 @@
             });
 
             window.dispatchEvent(new Event('scroll'));
-            
-            // Mobile menu toggle
+        }
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             
             mobileMenuBtn.addEventListener('click', function() {
                 mobileMenu.classList.toggle('hidden');
             });
-            
-            // Project filtering
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
-            const noResults = document.getElementById('no-results');
-            
-            // Set up filter button click handlers
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Update active state for filter buttons
-                    filterBtns.forEach(b => {
-                        b.classList.remove('bg-secondary', 'text-white');
-                        b.classList.add('bg-light', 'text-secondary');
-                    });
-                    
-                    this.classList.remove('bg-light', 'text-secondary');
-                    this.classList.add('bg-secondary', 'text-white');
-                    
-                    const filterValue = this.getAttribute('data-filter');
-                    let visibleCount = 0;
-                    
-                    // Filter the project cards
-                    projectCards.forEach(card => {
-                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                            card.classList.remove('hidden');
-                            visibleCount++;
-                        } else {
-                            card.classList.add('hidden');
-                        }
-                    });
-                    
-                    // Show/hide "No results" message
-                    if (visibleCount === 0) {
-                        noResults.classList.remove('hidden');
-                    } else {
-                        noResults.classList.add('hidden');
-                    }
-                    
-                    // Re-initialize AOS after filtering
-                    AOS.refresh();
-                });
-            });
-            
-            // Project modal functionality
-            const projectModal = document.getElementById('project-modal');
-            const modalContent = document.getElementById('modal-content');
-            const viewButtons = document.querySelectorAll('.view-project-btn');
-            const closeModalButtons = document.querySelectorAll('.close-modal');
-            
-            // Open modal when clicking View Project button
-            viewButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const projectId = this.getAttribute('data-project');
-                    const project = projectData[projectId];
-                    
-                    if (project) {
-                        // Build the modal content HTML
-                        let html = `
-                            <div class="mb-8">
-                                <h2 class="text-3xl font-bold text-secondary mb-2">${project.title}</h2>
-                                <p class="text-primary font-medium">${project.location}</p>
-                            </div>
-                            
-                            <!-- Project Gallery -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                                <div class="space-y-4">
-                                    <img src="${project.images[0].src}?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
-                                        alt="${project.images[0].alt}" class="w-full h-auto rounded-lg shadow-md">
-                                    <div class="grid grid-cols-4 gap-2">
-                        `;
-                        
-                        // Add thumbnail images (starting from the second image)
-                        for (let i = 1; i < Math.min(project.images.length, 5); i++) {
-                            html += `
-                                <img src="${project.images[i].src}?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" 
-                                    alt="${project.images[i].alt}" class="w-full h-20 object-cover rounded-md shadow-sm">
-                            `;
-                        }
-                        
-                        html += `
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-xl font-bold text-secondary mb-4">Project Overview</h3>
-                                    <p class="text-gray-600 mb-6">${project.description}</p>
-                                    
-                                    <div class="space-y-4">
-                                        <div>
-                                            <h4 class="font-semibold text-secondary">Project Scope:</h4>
-                                            <p class="text-gray-600">${project.scope}</p>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-semibold text-secondary">Duration:</h4>
-                                            <p class="text-gray-600">${project.duration}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-10 text-center">
-                                <a href="contact.html" class="inline-block px-8 py-3 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
-                                    Discuss Your Project
-                                </a>
-                            </div>
-                        `;
-                        
-                        // Set the modal content and show the modal
-                        modalContent.innerHTML = html;
-                        projectModal.classList.remove('hidden');
-                        projectModal.classList.add('flex');
-                        document.body.classList.add('overflow-hidden');
-                    }
-                });
-            });
-            
-            // Close modal when clicking close button or outside the modal
-            closeModalButtons.forEach(btn => {
-                btn.addEventListener('click', closeModal);
-            });
-            
-            projectModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal();
-                }
-            });
-            
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !projectModal.classList.contains('hidden')) {
-                    closeModal();
-                }
-            });
-            
-            function closeModal() {
-                projectModal.classList.add('hidden');
-                projectModal.classList.remove('flex');
-                document.body.classList.remove('overflow-hidden');
-            }
-            
-        });
+        }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/load-projects.js"></script>
 </body>
+</html>
