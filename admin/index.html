@@ -296,19 +296,34 @@
       // Function to upload a file to Supabase Storage
       async function uploadFile(file, path) {
           try {
+              // First verify we have a valid session
+              const { data: sessionData } = await supabase.auth.getSession();
+              if (!sessionData.session) {
+                  throw new Error("No active session found. Please log in again.");
+              }
+
+              // Log for debugging
+              console.log("Uploading with session:", sessionData.session.access_token.substring(0, 20) + "...");
+              
+              // Make sure we're using the authenticated client
               const { data, error } = await supabase.storage
                   .from(STORAGE_BUCKET)
                   .upload(path, file, {
                       cacheControl: '3600',
                       upsert: true
                   });
-              if (error) throw error;
+                  
+              if (error) {
+                  console.error("Upload error details:", error);
+                  throw error;
+              }
               
               // Get the public URL
               const { data: urlData } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
               return urlData.publicUrl;
           } catch (error) {
               console.error('Error uploading file:', error);
+              alert(`Upload failed: ${error.message || 'Authorization error'}`);
               throw error;
           }
       }
