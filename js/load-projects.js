@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     supabase
       .from('projects')
-      .select('*')
-      .order('created_at', { ascending: false })
+      .select('id, title, description, category, location, thumbnail, highlights, gallery, created_at')
+      .order('created_at', { ascending: false }) 
       .then(({ data: projects, error }) => {
         if (error) throw error;
         

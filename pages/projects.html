@@ -112,7 +112,6 @@
     </style>
 </head>
 <body class="font-sans text-textColor bg-white">
-    <!-- Header -->
     <header class="fixed w-full top-0 left-0 py-5 z-50 transition-all duration-300" id="header">
         <div class="container mx-auto px-5 flex justify-between items-center">
             <a href="../index.html">
@@ -130,7 +129,6 @@
                     <li><a href="contact.html" class="font-medium py-2 px-3 text-white relative hover:text-primary after:absolute after:w-0 after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300">Contact</a></li>
                 </ul>
                 
-                <!-- Quote Button (Desktop) -->
                 <a href="contact.html" class="hidden md:inline-block ml-6 px-5 py-2 bg-primary text-white font-semibold rounded transition-all duration-300 hover:bg-primary/90 hover:shadow-md">
                     Get a Quote
                 </a>
@@ -139,7 +137,6 @@
                     <i class="fas fa-bars"></i>
                 </div>
                 
-                <!-- Mobile Menu -->
                 <ul id="mobile-menu" class="mobile-menu hidden absolute top-12 right-0 bg-white shadow-lg rounded-lg w-64 py-5 flex flex-col z-50">
                     <li><a href="../index.html" style="color: #000;"  class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">Home</a></li>
                     <li><a href="about.html" style="color: #000;"  class="block py-3 px-5 border-b border-gray-100 hover:bg-light hover:text-primary transition-colors">About</a></li>
@@ -152,7 +149,6 @@
         </div>
     </header>
 
-    <!-- Page Banner -->
     <section class="relative pt-32 pb-24 bg-cover bg-center text-white" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
         <div class="absolute inset-0 bg-secondary/80 z-0"></div>
         <div class="container mx-auto px-5 relative z-10">
@@ -164,7 +160,6 @@
     </section>
 
     <main class="overflow-x-hidden overflow-y-hidden">
-        <!-- Project Categories -->
         <section class="py-12 px-5 bg-white border-b border-gray-200">
             <div class="container mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
@@ -177,20 +172,15 @@
             </div>
         </section>
         
-        <!-- Projects Grid -->
         <section class="py-16 px-5 bg-light">
             <div class="container mx-auto max-w-7xl">
-                <!-- Project loader -->
                 <div id="project-loader" class="py-12">
                     <div class="loader"></div>
                 </div>
 
-                <!-- Projects container -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                    <!-- Projects will be loaded dynamically -->
                 </div>
 
-                <!-- No Results Message -->
                 <div id="no-results" class="hidden text-center py-16">
                     <div class="text-4xl text-gray-300 mb-4">
                         <i class="fas fa-search"></i>
@@ -201,7 +191,6 @@
             </div>
         </section>
 
-        <!-- Project Detail Modal -->
         <div class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center project-modal" id="project-modal">
             <div class="flex items-center justify-center min-h-screen p-4">
                 <div class="bg-white rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto mx-5 relative">
@@ -210,7 +199,6 @@
                     </button>
                     
                     <div class="p-8" id="modal-content">
-                        <!-- Content will be loaded dynamically -->
                         <div class="animate-pulse">
                             <div class="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
                             <div class="h-4 bg-gray-200 rounded w-1/4 mb-6"></div>
@@ -255,18 +243,15 @@
             </div>
         </div>
 
-        <!-- Image Gallery Modal -->
         <div class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center" id="gallery-modal">
             <button class="absolute top-4 right-4 text-2xl text-white hover:text-primary transition-colors duration-300 z-10 close-gallery bg-black/30 w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="fas fa-times"></i>
             </button>
             
             <div class="w-full max-w-6xl mx-auto px-4" id="gallery-container">
-                <!-- Gallery will be initialized here -->
             </div>
         </div>
 
-        <!-- CTA Section -->
         <section class="py-20 px-5 bg-light" data-aos="fade-up">
             <div class="container mx-auto max-w-5xl">
                 <div class="bg-secondary rounded-lg p-10 md:p-16 shadow-xl text-center">
@@ -284,7 +269,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-secondary text-white pt-20">
         <div class="container mx-auto px-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -372,7 +356,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
@@ -380,12 +363,10 @@
     <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
     
     <script>
-        // Supabase Configuration
         const supabaseUrl = 'https://grffvgtgvtcoiaegadap.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyZmZ2Z3RndnRjb2lhZWdhZGFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQwMjg0NTcsImV4cCI6MjA1OTYwNDQ1N30.DJtyW5sRugSeIy_m0PRRpxU86UAjcMjxBh0gTQbIT4k';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // DOM Elements
         const projectsGrid = document.getElementById('projects-grid');
         const projectModal = document.getElementById('project-modal');
         const modalContent = document.getElementById('modal-content');
@@ -394,31 +375,21 @@
         const projectLoader = document.getElementById('project-loader');
         const noResults = document.getElementById('no-results');
         
-        // Store all projects for filtering
         let allProjects = [];
         let lightGalleryInstance = null;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS
             AOS.init({
                 duration: 800,
                 easing: 'ease-in-out',
                 once: true
             });
             
-            // Header scroll effect
             setupHeaderScroll();
-            
-            // Mobile menu toggle
             setupMobileMenu();
-            
-            // Load projects from Supabase
             loadProjects();
-            
-            // Set up filter buttons
             setupFilterButtons();
             
-            // Close modal buttons
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', closeProjectModal);
             });
@@ -427,7 +398,6 @@
                 btn.addEventListener('click', closeGalleryModal);
             });
             
-            // Close modals with escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     if (!projectModal.classList.contains('hidden')) {
@@ -439,7 +409,6 @@
                 }
             });
             
-            // Close modals when clicking outside
             projectModal.addEventListener('click', function(e) {
                 if (e.target === projectModal) {
                     closeProjectModal();
@@ -453,18 +422,15 @@
             });
         });
 
-        // ========== FUNCTIONS ==========
-
         async function loadProjects() {
             try {
                 const { data, error } = await supabase
                     .from('projects')
-                    .select('*')
+                    .select('id, title, description, category, location, thumbnail, highlights, created_at') 
                     .order('created_at', { ascending: false });
                 
                 if (error) throw error;
                 
-                // Hide loader
                 projectLoader.style.display = 'none';
                 
                 if (!data || data.length === 0) {
@@ -472,10 +438,7 @@
                     return;
                 }
                 
-                // Store projects for filtering
                 allProjects = data;
-                
-                // Render projects
                 renderProjects(data);
                 
             } catch (error) {
@@ -525,7 +488,6 @@
                         </div>
                         <p class="text-gray-600 mb-5">${project.description.substring(0, 120)}${project.description.length > 120 ? '...' : ''}</p>
                         
-                        <!-- Project Details -->
                         <div class="mb-5">
                             <h4 class="font-semibold text-secondary mb-2">Project Highlights:</h4>
                             <ul class="space-y-1 text-gray-600">
@@ -538,7 +500,6 @@
                             </ul>
                         </div>
                         
-                        <!-- View Project Button -->
                         <button class="view-project-btn w-full py-2 border border-primary text-primary font-semibold rounded-md transition-all duration-300 hover:bg-primary hover:text-white flex items-center justify-center mt-auto" data-project="${project.id}">
                             <span>View Full Project</span>
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -549,7 +510,6 @@
                 projectsGrid.appendChild(projectCard);
             });
             
-            // Initialize view project buttons
             document.querySelectorAll('.view-project-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const projectId = this.getAttribute('data-project');
@@ -557,41 +517,78 @@
                 });
             });
             
-            // Re-initialize AOS
             AOS.refresh();
         }
 
         async function openProjectModal(projectId) {
-            // Show the modal with loading state
             projectModal.classList.remove('hidden');
             projectModal.classList.add('flex');
             document.body.classList.add('overflow-hidden');
-            
+            modalContent.innerHTML = `
+                <div class="animate-pulse p-8">
+                    <div class="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/4 mb-6"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="space-y-4">
+                            <div class="h-64 bg-gray-200 rounded w-full"></div>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div class="h-16 bg-gray-200 rounded"></div> <div class="h-16 bg-gray-200 rounded"></div> <div class="h-16 bg-gray-200 rounded"></div> <div class="h-16 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
+                            <div class="h-4 bg-gray-200 rounded w-full mb-2"></div> <div class="h-4 bg-gray-200 rounded w-full mb-2"></div> <div class="h-4 bg-gray-200 rounded w-3/4 mb-6"></div>
+                            <div class="h-5 bg-gray-200 rounded w-1/3 mb-2"></div> <div class="h-4 bg-gray-200 rounded w-full mb-1"></div> <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                        </div>
+                    </div>
+                </div>`;
+
             try {
-                // Find the project in the cached data first
                 let project = allProjects.find(p => p.id == projectId);
-                
-                // If not found, fetch it from Supabase
+
                 if (!project) {
-                    const { data, error } = await supabase
+                    const { data: basicData, error: basicError } = await supabase
                         .from('projects')
-                        .select('*')
+                        .select('id, title, description, category, location, thumbnail, highlights, created_at')
                         .eq('id', projectId)
                         .single();
-                    
-                    if (error) throw error;
-                    project = data;
+                    if (basicError) throw basicError;
+                    project = basicData;
+                    const projectIndex = allProjects.findIndex(p => p.id == projectId);
+                    if (projectIndex > -1) {
+                        allProjects[projectIndex] = project;
+                    } else {
+                        allProjects.push(project);
+                    }
                 }
-                
+
+                if (project && !project.gallery) {
+                    const { data: galleryData, error: galleryError } = await supabase
+                        .from('projects')
+                        .select('gallery')
+                        .eq('id', projectId)
+                        .single();
+
+                    if (galleryError) {
+                        console.error("Error fetching gallery:", galleryError);
+                        project.gallery = null; 
+                    } else {
+                        project.gallery = galleryData?.gallery || null; 
+                        const projectIndex = allProjects.findIndex(p => p.id == projectId);
+                        if (projectIndex > -1) {
+                            allProjects[projectIndex].gallery = project.gallery;
+                        }
+                    }
+                }
+
                 if (!project) {
                     throw new Error('Project not found');
                 }
                 
-                // Build the gallery items HTML
                 let galleryItemsHtml = '';
-                if (project.gallery && project.gallery.length > 0) {
-                    project.gallery.forEach((item, index) => {
-                        if (index < 8) { // Limit preview to 8 images
+                if (project.gallery && Array.isArray(project.gallery) && project.gallery.length > 0) {
+                     project.gallery.forEach((item, index) => {
+                        if (index < 8) { 
                             galleryItemsHtml += `
                                 <div class="modal-gallery-item cursor-pointer" data-index="${index}">
                                     <img src="${item.image}" alt="${item.alt || project.title}">
@@ -612,10 +609,11 @@
                             </div>
                         `;
                     }
+                } else {
+                     galleryItemsHtml = '<p class="text-sm text-gray-500 col-span-4">No gallery images available.</p>';
                 }
-                
-                // Prepare the project highlights
-                const highlights = project.highlights || [];
+
+                 const highlights = project.highlights || [];
                 const highlightsHtml = highlights.map(highlight => 
                     `<li class="flex items-start mb-2">
                         <i class="fas fa-check text-primary mt-1 mr-3"></i>
@@ -623,7 +621,6 @@
                     </li>`
                 ).join('');
                 
-                // Build the modal content HTML
                 const html = `
                     <div class="mb-8">
                         <h2 class="text-3xl font-bold text-secondary mb-2">${project.title}</h2>
@@ -673,27 +670,26 @@
                     </div>
                 `;
                 
-                // Set the modal content
                 modalContent.innerHTML = html;
                 
-                // Initialize gallery preview click handlers
-                const galleryItems = modalContent.querySelectorAll('.modal-gallery-item');
-                galleryItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        openGalleryModal(project);
+                if (project.gallery && project.gallery.length > 0) {
+                    const galleryItems = modalContent.querySelectorAll('.modal-gallery-item');
+                    galleryItems.forEach(item => {
+                        item.addEventListener('click', function() {
+                            openGalleryModal(project); 
+                        });
                     });
-                });
-                
-                // Initialize view all photos button
-                const viewAllBtn = modalContent.querySelector('.view-all-photos');
-                if (viewAllBtn) {
-                    viewAllBtn.addEventListener('click', function() {
-                        openGalleryModal(project);
-                    });
+                    
+                    const viewAllBtn = modalContent.querySelector('.view-all-photos');
+                    if (viewAllBtn) {
+                        viewAllBtn.addEventListener('click', function() {
+                            openGalleryModal(project); 
+                        });
+                    }
                 }
                 
             } catch (error) {
-                console.error('Error opening project modal:', error);
+                 console.error('Error opening project modal:', error);
                 modalContent.innerHTML = `
                     <div class="text-center py-12">
                         <div class="text-5xl text-red-500 mb-4">
@@ -710,20 +706,16 @@
         }
 
         function openGalleryModal(project) {
-            // Make sure we have gallery images
             if (!project.gallery || project.gallery.length === 0) {
                 return;
             }
             
-            // Show the gallery modal
             galleryModal.classList.remove('hidden');
             galleryModal.classList.add('flex');
             document.body.classList.add('overflow-hidden');
             
-            // Clear previous gallery
             galleryContainer.innerHTML = '<div id="gallery-instance"></div>';
             
-            // Create gallery items array for lightGallery
             const galleryItems = [];
             project.gallery.forEach(item => {
                 galleryItems.push({
@@ -733,7 +725,6 @@
                 });
             });
             
-            // Initialize lightGallery
             const galleryElement = document.getElementById('gallery-instance');
             lightGalleryInstance = lightGallery(galleryElement, {
                 dynamic: true,
@@ -750,7 +741,6 @@
                 }
             });
             
-            // Open gallery immediately
             lightGalleryInstance.openGallery(0);
         }
 
@@ -775,7 +765,6 @@
             
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // Update active state
                     filterBtns.forEach(b => {
                         b.classList.remove('bg-secondary', 'text-white');
                         b.classList.add('bg-light', 'text-secondary');
@@ -784,10 +773,8 @@
                     this.classList.remove('bg-light', 'text-secondary');
                     this.classList.add('bg-secondary', 'text-white');
                     
-                    // Get filter value
                     const filterValue = this.getAttribute('data-filter');
                     
-                    // Filter projects
                     if (filterValue === 'all') {
                         renderProjects(allProjects);
                     } else {
