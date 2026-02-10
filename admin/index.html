@@ -260,7 +260,7 @@
       // Supabase Configuration
       const supabaseUrl = 'https://ufjwmzhnoinxbdcaoucw.supabase.co';
       const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmandtemhub2lueGJkY2FvdWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNTg1OTUsImV4cCI6MjA4NTYzNDU5NX0.5ZJpbFSR2-DhBGBQVQAq94I02PpJQqa-iuN4yQxvGLg';
-      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
       
       // Storage bucket configuration
       const STORAGE_BUCKET = 'project-images';
@@ -297,7 +297,7 @@
       async function uploadFile(file, path) {
           try {
               // First verify we have a valid session
-              const { data: sessionData } = await supabase.auth.getSession();
+              const { data: sessionData } = await sb.auth.getSession();
               if (!sessionData.session) {
                   throw new Error("No active session found. Please log in again.");
               }
@@ -306,7 +306,7 @@
               console.log("Uploading with session:", sessionData.session.access_token.substring(0, 20) + "...");
               
               // Make sure we're using the authenticated client
-              const { data, error } = await supabase.storage
+              const { data, error } = await sb.storage
                   .from(STORAGE_BUCKET)
                   .upload(path, file, {
                       cacheControl: '3600',
@@ -319,7 +319,7 @@
               }
               
               // Get the public URL
-              const { data: urlData } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+              const { data: urlData } = sb.storage.from(STORAGE_BUCKET).getPublicUrl(path);
               return urlData.publicUrl;
           } catch (error) {
               console.error('Error uploading file:', error);
@@ -339,7 +339,7 @@
                   }
               }
               
-              const { error } = await supabase.storage
+              const { error } = await sb.storage
                   .from(STORAGE_BUCKET)
                   .remove([path]);
                   
@@ -355,7 +355,7 @@
       
       // Check if user is logged in
       async function checkAuth() {
-        const { data } = await supabase.auth.getSession();
+        const { data } = await sb.auth.getSession();
         
         if (data.session) {
           loginSection.classList.add('hidden');
@@ -423,7 +423,7 @@
             </tr>
           `;
           
-          const { data, error } = await supabase
+          const { data, error } = await sb
             .from('projects')
             .select('*')
             .order('created_at', { ascending: false });
@@ -549,7 +549,7 @@
           currentProjectId = id;
           document.getElementById('project-id').value = id;
           
-          const { data, error } = await supabase
+          const { data, error } = await sb
             .from('projects')
             .select('*')
             .eq('id', id)
@@ -831,7 +831,7 @@
           // If editing, get existing gallery data
           let existingGallery = [];
           if (currentProjectId) {
-            const { data: projectData } = await supabase
+            const { data: projectData } = await sb
               .from('projects')
               .select('gallery')
               .eq('id', currentProjectId)
@@ -897,14 +897,14 @@
           
           if (currentProjectId) {
             // Update existing project
-            result = await supabase
+            result = await sb
               .from('projects')
               .update(formData)
               .eq('id', currentProjectId);
           } else {
             // Add new project with timestamp
             formData.created_at = new Date().toISOString();
-            result = await supabase
+            result = await sb
               .from('projects')
               .insert([formData]);
           }
@@ -932,7 +932,7 @@
       async function deleteProject() {
         try {
           // First get the project data to get image URLs
-          const { data: project } = await supabase
+          const { data: project } = await sb
             .from('projects')
             .select('*')
             .eq('id', currentProjectId)
@@ -956,7 +956,7 @@
           }
           
           // Delete the project record
-          const { error } = await supabase
+          const { error } = await sb
             .from('projects')
             .delete()
             .eq('id', currentProjectId);
@@ -992,7 +992,7 @@
           const email = document.getElementById('email').value;
           const password = document.getElementById('password').value;
           
-          const { data, error } = await supabase.auth.signInWithPassword({
+          const { data, error } = await sb.auth.signInWithPassword({
             email,
             password
           });
@@ -1010,7 +1010,7 @@
       // Logout button
       logoutBtn.addEventListener('click', async function() {
         try {
-          const { error } = await supabase.auth.signOut();
+          const { error } = await sb.auth.signOut();
           if (error) throw error;
           checkAuth();
         } catch (error) {

@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const supabaseUrl = 'https://ufjwmzhnoinxbdcaoucw.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmandtemhub2lueGJkY2FvdWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNTg1OTUsImV4cCI6MjA4NTYzNDU5NX0.5ZJpbFSR2-DhBGBQVQAq94I02PpJQqa-iuN4yQxvGLg';
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  supabase
+  sb
     .from('projects')
     .select('id, title, description, category, location, thumbnail, highlights, created_at') 
     .order('created_at', { ascending: false }) 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
       for (const project of projects) {
         try {
           // Only fetch gallery data if needed for the project card preview (up to 3 images)
-          const { data: galleryData, error: galleryError } = await supabase
+          const { data: galleryData, error: galleryError } = await sb
             .from('projects')
             .select('gallery')
             .eq('id', project.id)

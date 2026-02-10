@@ -365,7 +365,7 @@
     <script>
         const supabaseUrl = 'https://ufjwmzhnoinxbdcaoucw.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmandtemhub2lueGJkY2FvdWN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNTg1OTUsImV4cCI6MjA4NTYzNDU5NX0.5ZJpbFSR2-DhBGBQVQAq94I02PpJQqa-iuN4yQxvGLg';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const projectsGrid = document.getElementById('projects-grid');
         const projectModal = document.getElementById('project-modal');
@@ -424,7 +424,7 @@
 
         async function loadProjects() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await sb
                     .from('projects')
                     .select('id, title, description, category, location, thumbnail, highlights, created_at') 
                     .order('created_at', { ascending: false });
@@ -547,7 +547,7 @@
                 let project = allProjects.find(p => p.id == projectId);
 
                 if (!project) {
-                    const { data: basicData, error: basicError } = await supabase
+                    const { data: basicData, error: basicError } = await sb
                         .from('projects')
                         .select('id, title, description, category, location, thumbnail, highlights, created_at')
                         .eq('id', projectId)
@@ -563,7 +563,7 @@
                 }
 
                 if (project && !project.gallery) {
-                    const { data: galleryData, error: galleryError } = await supabase
+                    const { data: galleryData, error: galleryError } = await sb
                         .from('projects')
                         .select('gallery')
                         .eq('id', projectId)
